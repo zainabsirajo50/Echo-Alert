@@ -5,11 +5,11 @@ function Home() {
     return (
         <div className='header'>
           <h1>Eco-Alert</h1>
-          <Link to="/Login-Page">
+          <Link to="/Login">
             <button>Login</button>
           </Link>
 
-          <Link to="/SignUp-Page">
+          <Link to="/SignUp">
             <button>Sign Up</button>
           </Link>
 
