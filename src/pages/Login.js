@@ -4,10 +4,19 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const handleSubmit = (e) => {
+        e.preventDefault(); //Prevents page refreshing
+
+        // Clear the input fields after submission
+        setEmail('');
+        setPassword('');
+    };
+
     return (
       <div>
         <h2>Sign In</h2>
-        <form>
+
+        <form onSubmit={handleSubmit}>
         <label>Email</label>
         <input
             name='email'
@@ -23,6 +32,7 @@ function Login() {
             placeholder="Password"
             type='password'
             value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
         />
         <button type="submit">Login</button>
