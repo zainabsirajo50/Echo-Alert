@@ -18,8 +18,7 @@ function App() {
     <Router>
       <div className="App">
         <nav>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
+
         </nav>
         <Routes>
           <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
