@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/:https://zainabsirajo50.github.io/static/css/main.9ab75f5c.css",
+    "main.js": "/:https://zainabsirajo50.github.io/static/js/main.b439a330.js",
+    "static/js/453.f0e89efe.chunk.js": "/:https://zainabsirajo50.github.io/static/js/453.f0e89efe.chunk.js",
+    "index.html": "/:https://zainabsirajo50.github.io/index.html",
+    "main.9ab75f5c.css.map": "/:https://zainabsirajo50.github.io/static/css/main.9ab75f5c.css.map",
+    "main.b439a330.js.map": "/:https://zainabsirajo50.github.io/static/js/main.b439a330.js.map",
+    "453.f0e89efe.chunk.js.map": "/:https://zainabsirajo50.github.io/static/js/453.f0e89efe.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9ab75f5c.css",
+    "static/js/main.b439a330.js"
+  ]
+}
