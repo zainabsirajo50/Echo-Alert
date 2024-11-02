@@ -40,6 +40,7 @@ function SignUp() {
               placeholder="Email"
               type='email'
               value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
           />
         </div>
@@ -79,7 +80,7 @@ function SignUp() {
 
         <button type="submit" className="submit-button">Sign Up</button>
         </form>
-        <p className="signup-link">Already have an account? <a href="/login">Sign In</a></p>
+        <p className="signup-link">Already have an account?<a href="/login">Sign In</a></p>
       </div>
       </>
     );
