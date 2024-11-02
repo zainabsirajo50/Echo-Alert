@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/Login-SignUp.css';
 
 function SignUp() {
     const [email, setEmail] = useState('');
@@ -26,38 +27,46 @@ function SignUp() {
 
 
     return (
-      <div>
+      <>
+      <header></header> 
+      <div className="signup-form"> 
         <h2>Sign Up</h2>
 
         <form onSubmit={handleSubmit}>
-        <label>Email</label>
-        <input
-            name='email'
-            placeholder="Email"
-            type='email'
-            value={email}
-            required
-        />
+          <div className='form-group'>
+          <label>Email</label>
+          <input
+              name='email'
+              placeholder="Email"
+              type='email'
+              value={email}
+              required
+          />
+        </div>
 
-        <label>Password</label>
-        <input
-            name='password'
-            placeholder="Password"
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-        />
+        <div className='form-group'>
+          <label>Password</label>
+          <input
+              name='password'
+              placeholder="Password"
+              type='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+          />
+        </div>
 
-        <label>Confirm Password</label>
-        <input
-            name='cpassword'
-            placeholder="Password"
-            type='password'
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-        />
+        <div className='form-group'>
+          <label>Confirm Password</label>
+          <input
+              name='cpassword'
+              placeholder="Password"
+              type='password'
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+          />
+        </div>
 
         <label>Which role are you?</label>
         <select value={userRole} onChange={(e) => setUserRole(e.target.value)} required>
@@ -68,9 +77,11 @@ function SignUp() {
         ))}
         </select>
 
-        <button type="submit">Register</button>
+        <button type="submit" className="submit-button">Sign Up</button>
         </form>
+        <p className="signup-link">Already have an account? <a href="/login">Sign In</a></p>
       </div>
+      </>
     );
   }
   
