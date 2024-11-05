@@ -1,8 +1,8 @@
 <?php
 
-$host = "localhost";
-$user = "root";
-$pass = "IluqBMGFtc9!";
+$host = "eco-alert.c1gg4gm00tau.us-east-2.rds.amazonaws.com";
+$user = "hafsa";
+$pass = "ecoAlert3!";
 $db = "EcoAlert";
 
 $conn = new MySQLi($host, $user, $pass, $db);

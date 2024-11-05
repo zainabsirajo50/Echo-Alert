@@ -1,3 +1,4 @@
+-- Active: 1730773964334@@eco-alert.c1gg4gm00tau.us-east-2.rds.amazonaws.com@3306@EcoAlert
 CREATE DATABASE IF NOT EXISTS EcoAlert;
 
 USE EcoAlert;
