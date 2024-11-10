@@ -2,7 +2,7 @@
 // signup.php
 session_start();
 
-require 'connection.php'; // Ensure this path is correct
+require 'app/database/connection.php'; // Ensure this path is correct
 
 // Check if the connection is established
 if ($conn->connect_error) {
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="LoginForm.css">
+    <link rel="stylesheet" href="src/css/LoginForm.css">
     <title>Sign Up</title>
 </head>
 <body>

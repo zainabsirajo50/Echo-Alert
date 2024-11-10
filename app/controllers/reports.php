@@ -15,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $issueType = $_POST['issue_type'] ?? '';
     $location = $_POST['location'] ?? '';
 
-
     // Insert the report into the database
     $insert_report_query = "INSERT INTO reports (userid, issue_type, location) VALUES (?, ?, ?)";
     $stmt = $conn->prepare($insert_report_query);
@@ -38,43 +37,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+include '../pageview/reports/index.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Report</title>
-    <link rel="stylesheet" href="LoginForm.css">
-</head>
-<body>
-
-<!-- Header Section with Buttons and Search Bar -->
-<header>
-    <div class="header-container">
-        <div class="header-buttons">
-            <button onclick="window.location.href='user-homepage.php'">Home</button>
-            <button onclick="window.location.href='reports.php'">Create Report</button>
-            <button onclick="window.location.href='events-page.php'">View Events</button>
-        </div>
-
-        <div class="header-search">
-            <form method="GET" action="search_results.php">
-                <input type="text" name="search_query" placeholder="Search reports or events..." required>
-                <button type="submit">Search</button>
-            </form>
-        </div>
-
-    </div>
-</header>
-
-<!-- Report Submission Form -->
-
-<div class="report-form">
-<h2>Reports Near Me</h2>
-    
-</div>
-
-</body>
-</html>

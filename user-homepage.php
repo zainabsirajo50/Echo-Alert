@@ -1,7 +1,10 @@
 <?php
 // report_submission.php
 session_start();
-require 'connection.php'; // Ensure this path is correct
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+require 'app/database/connection.php'; // Ensure this path is correct
 
 // Check if the connection is established
 if ($conn->connect_error) {
@@ -14,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userid = $_SESSION['userid']; // Assuming user is logged in and userid is stored in session
     $issueType = $_POST['issue_type'] ?? '';
     $location = $_POST['location'] ?? '';
+
 
     // Insert the report into the database
     $insert_report_query = "INSERT INTO reports (userid, issue_type, location) VALUES (?, ?, ?)";
@@ -45,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Report</title>
-    <link rel="stylesheet" href="LoginForm.css"> <!-- Link to your custom CSS -->
+    <link rel="stylesheet" href="src/css/LoginForm.css">
 </head>
 <body>
 
@@ -53,8 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <header>
     <div class="header-container">
         <div class="header-buttons">
-            <button onclick="window.location.href='user-homepage.php'">Home</button>
-            <button onclick="window.location.href='events-page.php'">View Events</button>
+            <button onclick="window.location.href='/Eco-Alert/user-homepage.php'">Home</button>
+            <button onclick="window.location.href='pageview/reports/index.php'">Create Report</button>
+            <button onclick="window.location.href='pageview/events/index.php'">View Events</button>
         </div>
 
         <div class="header-search">
@@ -63,23 +68,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit">Search</button>
             </form>
         </div>
+
     </div>
 </header>
 
 <!-- Report Submission Form -->
+
 <div class="report-form">
-    <h2>Submit a Report</h2>
-    <form method="POST" action="">
-        <div class="form-group">
-            <label>Issue Type:</label>
-            <input type="text" name="issue_type" required />
-        </div>
-        <div class="form-group">
-            <label>Location:</label>
-            <input type="text" name="location" required />
-        </div>
-        <button type="submit" class="submit-button">Submit Report</button>
-    </form>
+<h2>Reports Near Me</h2>
+    
 </div>
 
 </body>

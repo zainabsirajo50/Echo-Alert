@@ -1,7 +1,7 @@
 <?php
 // login.php
 session_start();
-require 'connection.php'; // Ensure the path is correct and it establishes $conn
+require 'app/database/connection.php'; // Ensure the path is correct and it establishes $conn
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get email and password from POST request
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="LoginForm.css">
+    <link rel="stylesheet" href="src/css/LoginForm.css">
     <title>Login</title>
 </head>
 <body>

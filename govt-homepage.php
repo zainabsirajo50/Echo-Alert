@@ -1,7 +1,7 @@
 <?php
 // report_submission.php
 session_start();
-require 'connection.php'; // Ensure this path is correct
+require 'app/database/connection.php'; // Ensure this path is correct
 
 // Check if the connection is established
 if ($conn->connect_error) {
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Report</title>
-    <link rel="stylesheet" href="LoginForm.css">
+    <link rel="stylesheet" href="src/css/LoginForm.css">
 </head>
 <body>
 
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <header>
     <div class="header-container">
         <div class="header-buttons">
-            <button onclick="window.location.href='eventspage.php'">View Events</button>
+            <button onclick="window.location.href='pageview/events/index.php'">View Events</button>
         </div>
 
         <div class="header-search">
