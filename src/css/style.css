@@ -1,0 +1,122 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F2F3D9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+header {
+    width: 100%;
+    background-color: #348AA7;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.5em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.header-buttons button {
+    background-color: #348AA7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.header-buttons button:hover {
+    background-color: #2a6e7e;
+}
+
+.header-search input {
+    padding: 8px;
+    font-size: 1em;
+    border-radius: 8px;
+    border: 1px solid #bbb;
+}
+
+.header-search button {
+    padding: 8px 10px;
+    background-color: #348AA7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.events-container {
+    margin-top: 100px; /* To prevent content from being hidden under the fixed header */
+    width: 80%;
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.events-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.event-card {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: box-shadow 0.3s;
+}
+
+.event-card:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.event-name {
+    font-size: 1.5em;
+    color: #348AA7;
+}
+
+.event-date, .event-location {
+    font-size: 1.1em;
+    color: #555;
+    margin-top: 5px;
+}
+
+.event-description {
+    font-size: 1em;
+    color: #333;
+    margin-top: 15px;
+}
+
+footer {
+    width: 100%;
+    background-color: #348AA7;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    margin-top: auto;
+}
