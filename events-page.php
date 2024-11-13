@@ -66,8 +66,8 @@ if ($result->num_rows > 0) {
 <header>
     <div class="header-container">
         <div class="header-buttons">
-            <button onclick="window.location.href='reports.php'">Create Report</button>
             <button onclick="window.location.href='user-homepage.php'">Home</button>
+            <button onclick="window.location.href='reports.php'">Create Report</button>
         </div>
 
         <div class="header-search">

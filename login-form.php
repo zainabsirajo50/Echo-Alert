@@ -1,5 +1,5 @@
 <?php
-// login.php
+
 session_start();
 require 'connection.php'; // Ensure the path is correct and it establishes $conn
 
@@ -18,14 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Fetch the user data
         $user = $result->fetch_assoc();
         // Verify the password
-        if (password_verify($password, $user['password'])) {
+        if ($password == $user['password']) {
             // Login successful
             echo "Login successful!";
             // Set session variables, redirect, etc.
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             echo "Success!";
-            header("Location: /~zsirajo1/src/HomePage.php"); // Redirect to a homepage or dashboard
+            header("Location: /~zsirajo1/src/user-homepage.php"); // Redirect to a homepage or dashboard
             exit();
         } else {
             echo "Invalid email or password.";

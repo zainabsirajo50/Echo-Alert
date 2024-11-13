@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare($insert_user_query);
 
         if ($stmt) {
-            $stmt->bind_param("sss", $name, $email, $password, $userType);
+            $stmt->bind_param("ssss", $name, $email, $password, $userType);
 
             // Execute the statement
             if ($stmt->execute()) {
