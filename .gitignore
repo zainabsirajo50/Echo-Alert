@@ -2,6 +2,7 @@
 
 # testing
 /coverage
+config.php
 
 # misc
 .DS_Store
