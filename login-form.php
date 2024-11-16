@@ -18,14 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Fetch the user data
         $user = $result->fetch_assoc();
         // Verify the password
-        if (password_verify($password, $user['password'])) {
+        if ($password == $user['password']) {
             // Login successful
             echo "Login successful!";
             // Set session variables, redirect, etc.
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             echo "Success!";
-            header("Location: /~zsirajo1/src/HomePage.php"); // Redirect to a homepage or dashboard
+            header("Location: ~/hhassan6/Eco-Alert/user-homepage.php"); // Redirect to a homepage or dashboard
             exit();
         } else {
             echo "Invalid email or password.";
@@ -42,12 +42,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/css/LoginForm.css">
     <title>Login</title>
 </head>
+
 <body>
     <div class="login-form">
         <h2>Login</h2>
@@ -65,4 +67,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p class="signup-link">Don't have an account? <a href="/~zsirajo1/src/SignupForm.php">Sign up here</a></p>
     </div>
 </body>
+
 </html>

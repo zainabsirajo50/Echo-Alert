@@ -1,6 +1,6 @@
 <?php
 include "../../path.php";
-include ROOT_PATH . "app/controllers/events.php";
+include ROOT_PATH . "/app/controllers/events.php";
 ?>
 
 <!DOCTYPE html>

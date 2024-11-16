@@ -22,20 +22,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Basic validation
     if ($password === $confirmPassword) {
         // Hash the password for security
-        
+
 
         // Prepare and bind
         $insert_user_query = "INSERT INTO users (name, email, password, user_type) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($insert_user_query);
 
         if ($stmt) {
-            $stmt->bind_param("sss", $name, $email, $password, $userType);
+            $stmt->bind_param("ssss", $name, $email, $password, $userType);
 
             // Execute the statement
             if ($stmt->execute()) {
                 // Add JavaScript code to show popup after successful signup
                 echo '<script>alert("User registered successfully!");</script>';
-                header("Location: /~zsirajo1/src/LoginForm.php");
+                header("Location: ~/hhassan6/Eco-Alert/LoginForm.php");
                 exit(); // Ensure no further code is executed after redirect
             } else {
                 echo "Error: " . $stmt->error; // Use stmt->error for error message
@@ -55,12 +55,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/css/LoginForm.css">
     <title>Sign Up</title>
 </head>
+
 <body>
     <div class="signup-form">
         <h2>Sign Up</h2>
@@ -93,4 +95,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p class="signup-link">Already have an account? <a href="/~zsirajo1/src/LoginForm.php">Sign In</a></p>
     </div>
 </body>
+
 </html>

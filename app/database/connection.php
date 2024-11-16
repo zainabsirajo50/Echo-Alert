@@ -5,7 +5,15 @@ $conn = new mysqli($servername, $username, $password, $database);
 
 // Check connection
 if ($conn->connect_error) {
-    die("Database connection error: " . $conn->connect_error);
+    die("Database connection failed: " . $conn->connect_error);
+} else {
+    echo "Successfully connected to database.<br>";
+}
+
+$result = $conn->query("SHOW COLUMNS FROM users LIKE 'user_type'");
+if ($result->num_rows == 0) {
+    // Add column if it doesn't exist
+    $conn->query("ALTER TABLE users ADD COLUMN user_type VARCHAR(100) NOT NULL");
 }
 
 // Create the users table if it doesn't exist
@@ -13,8 +21,8 @@ $sql_create_users = "CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    user_type VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL
+
 );";
 
 $sql_create_reports = "CREATE TABLE IF NOT EXISTS reports (
@@ -48,4 +56,3 @@ if ($conn->query($sql_create_users) === TRUE && $conn->query($sql_create_reports
 $sql_fetch_users = "SELECT DISTINCT id, name FROM users";
 $result_users = $conn->query($sql_fetch_users);
 
-?>

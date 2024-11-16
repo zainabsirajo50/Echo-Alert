@@ -1,6 +1,6 @@
 <?php
 include("../../path.php");
-include(ROOT_PATH . "app/controllers/reports.php");
+include(ROOT_PATH . "/app/controllers/reports.php");
 ?>
 
 <!DOCTYPE html>
