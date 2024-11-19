@@ -18,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirmPassword = $_POST['confirm_password'] ?? '';
     $userType = $_POST['user_type'] ?? 'community_member'; // Default to community_member if not selected
 
-
     // Basic validation
     if ($password === $confirmPassword) {
         // Hash the password for security
@@ -35,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->execute()) {
                 // Add JavaScript code to show popup after successful signup
                 echo '<script>alert("User registered successfully!");</script>';
-                header("Location: ~/hhassan6/Eco-Alert/LoginForm.php");
+                header('Location: /~' . $pathname . '/Eco-Alert/login-form.php');
                 exit(); // Ensure no further code is executed after redirect
             } else {
                 echo "Error: " . $stmt->error; // Use stmt->error for error message
