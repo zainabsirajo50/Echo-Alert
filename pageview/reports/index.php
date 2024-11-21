@@ -37,18 +37,24 @@ include(ROOT_PATH . "/app/controllers/reports.php");
     <!-- Report Submission Form -->
     <div class="report-form">
         <h2>Submit a Report</h2>
-        <form method="POST" action="">
+        <form method="POST" action="index.php">
+
+            <?php include(ROOT_PATH . "/app/messages/errors.php"); ?>
+
             <div class="form-group">
                 <label>Issue Type:</label>
-                <input type="text" name="issue_type" required />
+                <input type="text" name="issue_type" value="<?php echo $issue_type; ?>">
             </div>
             <div class="form-group">
                 <label>Location:</label>
-                <input type="text" name="location" required />
+                <input type="text" name="location" value="<?php echo $location; ?>">
             </div>
-            <button type="submit" class="submit-button">Submit Report</button>
+            <div>
+                <button type="submit" class="submit-button">Submit Report</button>
+            </div>
         </form>
     </div>
+
 
 </body>
 
