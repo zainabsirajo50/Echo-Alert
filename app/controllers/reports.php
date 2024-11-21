@@ -12,7 +12,6 @@ require ROOT_PATH . "/app/database/connection.php";
 $errors = [];
 $issue_type = '';
 $location = '';
-$created_at = '';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
