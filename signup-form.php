@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->execute()) {
                 // Add JavaScript code to show popup after successful signup
                 echo '<script>alert("User registered successfully!");</script>';
-                header('Location: ' . BASE_URL . '/Eco-Alert/login-form.php');
+                header('Location: ' . BASE_URL . '/login-form.php');
                 exit(); // Ensure no further code is executed after redirect
             } else {
                 echo "Error: " . $stmt->error; // Use stmt->error for error message
