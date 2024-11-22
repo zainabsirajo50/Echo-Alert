@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!-- Report Submission Form -->
 
 <div class="report-form">
-<h2>Reports Near Me</h2>
+<h2>Community Member Reports Near Me</h2>
     
 </div>
 

@@ -24,8 +24,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Set session variables, redirect, etc.
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
+            $_SESSION['user_type'] = $user['user_type'];
+
             echo "Success!";
-            header("Location: /~zsirajo1/src/user-homepage.php"); // Redirect to a homepage or dashboard
+            // Redirect based on user type
+                    if ($user['user_type'] === 'govt_worker') {
+                        header("Location: /~zsirajo1/src/govt-homepage.php"); // Government worker dashboard page
+                    } else {
+                        header("Location: /~zsirajo1/src/user-homepage.php"); // Community member dashboard page
+                    }
             exit();
         } else {
             echo "Invalid email or password.";

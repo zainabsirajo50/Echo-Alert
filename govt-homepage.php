@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <div class="report-form">
 <h2>Reports Near Me</h2>
-    
+    <h1>Govt HomePage</h1>
 </div>
 
 </body>
