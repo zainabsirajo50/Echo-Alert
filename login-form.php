@@ -1,6 +1,11 @@
 <?php
 // login.php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 session_start();
+include "path.php";
 require 'app/database/connection.php'; // Ensure the path is correct and it establishes $conn
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -25,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             echo "Success!";
-            header('Location: /~' . $pathname . '/Eco-Alert/user-homepage.php'); // Redirect to a homepage or dashboard
+            header('Location: ' . BASE_URL . '/user-homepage.php'); // Redirect to a homepage or dashboard
             exit();
         } else {
             echo "Invalid email or password.";
@@ -64,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <button type="submit" class="submit-button">Login</button>
         </form>
-        <p class="signup-link">Don't have an account? <a href="/~zsirajo1/src/SignupForm.php">Sign up here</a></p>
+        <p class="signup-link">Don't have an account? <a href='<?php echo BASE_URL; ?>/signup-form.php'>Sign up here</a></p>
     </div>
 </body>
 

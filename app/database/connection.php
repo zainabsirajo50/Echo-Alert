@@ -1,5 +1,5 @@
 <?php
-include_once 'config.php';
+include ROOT_PATH . "/config.php";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
 

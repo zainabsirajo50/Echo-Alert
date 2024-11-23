@@ -1,7 +1,6 @@
 <?php
 // events_page.php
 session_start();
-include "../../path.php";
 require ROOT_PATH . "/app/database/connection.php"; // Ensure this path is correct
 
 // Check if the connection is established

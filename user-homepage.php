@@ -1,47 +1,7 @@
 <?php
 // report_submission.php
-session_start();
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 include "path.php";
-require "app/database/connection.php"; // Ensure this path is correct
-
-// Check if the connection is established
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
-}
-
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the form data
-    $userid = $_SESSION['userid']; // Assuming user is logged in and userid is stored in session
-    $issueType = $_POST['issue_type'] ?? '';
-    $location = $_POST['location'] ?? '';
-
-
-    // Insert the report into the database
-    $insert_report_query = "INSERT INTO reports (userid, issue_type, location) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($insert_report_query);
-
-    if ($stmt) {
-        $stmt->bind_param("iss", $userid, $issueType, $location);
-
-        // Execute the statement
-        if ($stmt->execute()) {
-            echo '<script>alert("Report submitted successfully!");</script>';
-            // Redirect or display a success message
-        } else {
-            echo "Error: " . $stmt->error;
-        }
-
-        // Close the statement
-        $stmt->close();
-    } else {
-        echo "Error preparing statement: " . $conn->error;
-    }
-}
+require "app/controllers/reports.php"; // Ensure this path is correct
 
 ?>
 
@@ -82,6 +42,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <div class="report-form">
         <h2>Reports Near Me</h2>
+
+        <!-- Display Reports -->
+        <section class="reports-section">
+            <ul>
+                <?php if (!empty($reports)): ?>
+                    <?php foreach ($reports as $report): ?>
+                        <li class="report-item">
+                            <h3><?php echo htmlspecialchars($report['issue_type']); ?></h3>
+                            <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
+                            <p><strong>Date:</strong> <?php echo date('F j, Y', strtotime($report['date_reported'])); ?></p>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No reports found.</p>
+                <?php endif; ?>
+            </ul>
+        </section>
+
 
     </div>
 

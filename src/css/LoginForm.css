@@ -22,6 +22,10 @@ header {
     z-index: 1000;
 }
 
+li {
+    list-style: none;
+}
+
 .header-container {
     display: flex;
     justify-content: space-between;
@@ -60,7 +64,8 @@ header {
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    width: 200px; /* Reduced width for smaller search bar */
+    width: 200px;
+    /* Reduced width for smaller search bar */
 }
 
 .header-search button {
@@ -85,7 +90,8 @@ footer {
     padding: 10px 0;
     position: relative;
     bottom: 0;
-    margin-top: auto; /* Ensures footer is at the bottom */
+    margin-top: auto;
+    /* Ensures footer is at the bottom */
 }
 
 .login-form {
@@ -128,7 +134,8 @@ label {
 input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #bbb; /* Changed to a slightly darker color */
+    border: 1px solid #bbb;
+    /* Changed to a slightly darker color */
     border-radius: 8px;
     background-color: #F2F3D9;
     transition: border-color 0.3s;
@@ -180,7 +187,8 @@ input:focus {
     width: 400px;
     height: auto;
     box-sizing: border-box;
-    margin-top: 80px; /* Adjusts space below the header */
+    margin-top: 80px;
+    /* Adjusts space below the header */
 }
 
 .report-form h2 {
@@ -228,4 +236,60 @@ input:focus {
 
 .report-form .submit-button:hover {
     background-color: #2a6e7e;
+}
+
+/* ************* MESSAGES ************* */
+
+.message {
+    width: 100%;
+    list-style: none;
+    padding: 3px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.error-message {
+    border: 1px solid rgb(129, 35, 35);
+    background: rgb(247, 181, 181);
+}
+
+.success-message {
+    border: 1px solid rgb(18, 100, 46);
+    background: rgb(186, 247, 206);
+}
+
+/* ************* Reports display ************* */
+
+.reports-section {
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.reports-section ul {
+    padding: 0;
+}
+
+.report-item {
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.report-item h3 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.report-item p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.report-item strong {
+    font-weight: bold;
 }
