@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F2F3D9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    box-sizing: border-box;
+}
+
+header {
+    width: 100%;
+    background-color: #348AA7;
+    color: white;
+    padding: 15px;
+    font-size: 1.5em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+a {
+    background-color: #F2F3D9;
+    border-radius: 10px;
+    color: #000;
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    padding: 10px;
+    text-decoration: none;
+}
