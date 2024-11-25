@@ -59,6 +59,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="header-buttons">
                 <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View
                     Events</button>
+                    <button onclick="window.location.href='<?php echo BASE_URL; ?>/settings.php'">Settings
+                    </button> 
             </div>
 
             <div class="header-search">
