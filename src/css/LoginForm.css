@@ -365,13 +365,20 @@ input:focus {
 }
 
 .upvote-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 20px; /* Adjust size of the arrow */
-    color: #348AA7;
+    background-color: #348AA7;
+    color: white; 
+    border: none;  
+    border-radius: 5px;  
+    padding: 8px 12px; 
+    font-size: 10px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
 }
 
 .upvote-button:hover {
-    color: #1D6F81; /* Color on hover */
+    background-color: #1D6F81;
+}
+
+.upvote-button:active {
+    background-color: #145a69; 
 }

@@ -68,7 +68,7 @@ require "app/controllers/reports.php"; // Ensure this path is correct
                             <form method="POST" action="upvote.php">
                                 <input type="hidden" name="report_id" value="<?php echo $report['reportid']; ?>">
                                 <button type="submit" class="upvote-button">
-                                    <i class="fas fa-arrow-up"></i> <!-- Font Awesome Up Arrow -->
+                                    ⬆
                                 </button>
                             </form>
                         </li>
