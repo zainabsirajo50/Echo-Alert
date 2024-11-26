@@ -71,6 +71,13 @@ require "app/controllers/reports.php"; // Ensure this path is correct
                                     ⬆
                                 </button>
                             </form>
+                            <!-- Downvote Form -->
+                            <form method="POST" action="downvote.php">
+                                <input type="hidden" name="report_id" value="<?php echo $report['reportid']; ?>">
+                                <button type="submit" class="upvote-button">
+                                    ⬇
+                                </button>
+                            </form>
                         </li>
                     <?php endforeach; ?>
                 <?php else: ?>
