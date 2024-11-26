@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
             echo "Success!";
+
             header('Location: ' . BASE_URL . '/user-homepage.php'); // Redirect to a homepage or dashboard
             exit();
         } else {

@@ -1,13 +1,8 @@
 <?php
 session_start();
 
-// Redirect to login if the user is not logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: /login.php");
-    exit();
-}
-
-require 'connection.php'; // Database connection
+include "path.php";
+require ROOT_PATH . "/app/database/connection.php";
 
 // Fetch user details from the database
 $user_id = $_SESSION['user_id'];
@@ -27,9 +22,10 @@ if (!$user) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $update_query = "UPDATE users SET name = ?, email = ? WHERE id = ?";
+    $pasword = $_POST('password');
+    $update_query = "UPDATE users SET name = ?, email = ?, password = ?, WHERE id = ?";
     $stmt = $conn->prepare($update_query);
-    $stmt->bind_param("ssi", $name, $email, $user_id);
+    $stmt->bind_param("ssi", $name, $email, $password, $user_id);
 
     if ($stmt->execute()) {
         echo "<script>alert('Settings updated successfully!');</script>";
@@ -45,9 +41,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/css/LoginForm.css">
     <title>User Settings</title>
 </head>
 <body>
+
+<header>
+        <div class="header-container">
+            <div class="header-buttons">
+                <button onclick="window.location.href='<?php echo BASE_URL; ?>/user-homepage.php'">Home</button>
+                <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/reports/index.php'">Create
+                    Report</button>
+                <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View
+                    Events</button>
+            </div>
+
+            <div class="header-search">
+                <form method="GET" action="search_results.php">
+                    <input type="text" name="search_query" placeholder="Search reports or events..." required>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+
+            <!-- Profile Dropdown -->
+            <div class="profile-dropdown">
+                <button class="profile-button">
+                <?php echo $_SESSION['user_name']; ?>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="<?php echo BASE_URL; ?>/view_profile.php">View Profile</a>
+                    <a href="<?php echo BASE_URL; ?>/settings.php">Settings</a>
+                    <a href="<?php echo BASE_URL; ?>/logout.php">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="report-form">
     <h1>User Settings</h1>
     <form method="POST" action="">
         <label for="name">Name:</label>
@@ -56,11 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
         <br>
-        <button type="submit">Update</button>
+        <button type="submit" class="submit-button">Update</button>
     </form>
     <br>
-    <a href="/change_password.php">Change Password</a>
+    <a class="signup-link" href="<?php echo BASE_URL; ?>/change_password.php">Change Password</a>
     <br>
-    <a href="/logout.php">Logout</a>
+    <a class="signup-link" href="<?php echo BASE_URL; ?>/logout.php">Logout</a>
+</div>
 </body>
 </html>

@@ -22,6 +22,8 @@ include ROOT_PATH . "/app/controllers/events.php";
                 <button onclick="window.location.href='<?php echo BASE_URL; ?>/user-homepage.php'">Home</button>
                 <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/reports/index.php'">Create
                     Report</button>
+                <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View
+                    Events</button>
             </div>
 
             <div class="header-search">
@@ -29,6 +31,18 @@ include ROOT_PATH . "/app/controllers/events.php";
                     <input type="text" name="search_query" placeholder="Search reports or events..." required>
                     <button type="submit">Search</button>
                 </form>
+            </div>
+
+            <!-- Profile Dropdown -->
+            <div class="profile-dropdown">
+                <button class="profile-button">
+                <?php echo $_SESSION['user_name']; ?>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="<?php echo BASE_URL; ?>/view_profile.php">View Profile</a>
+                    <a href="<?php echo BASE_URL; ?>/settings.php">Settings</a>
+                    <a href="<?php echo BASE_URL; ?>/logout.php">Logout</a>
+                </div>
             </div>
         </div>
     </header>

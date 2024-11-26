@@ -293,3 +293,85 @@ input:focus {
 .report-item strong {
     font-weight: bold;
 }
+
+/* Profile dropdown styling */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-button {
+    background-color: #348AA7;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.profile-button:hover {
+    background-color: #287289;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-width: 150px;
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.dropdown-menu a {
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #ddd;
+}
+
+.dropdown-menu a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+.profile-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.report-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.upvote-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align to the left of the container */
+    gap: 10px; /* Space between upvotes count and the arrow */
+}
+
+.upvote-count {
+    font-size: 18px; /* Adjust size of the upvote count */
+    color: #348AA7;  /* Adjust color */
+}
+
+.upvote-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px; /* Adjust size of the arrow */
+    color: #348AA7;
+}
+
+.upvote-button:hover {
+    color: #1D6F81; /* Color on hover */
+}
