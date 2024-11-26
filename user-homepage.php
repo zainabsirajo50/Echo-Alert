@@ -51,7 +51,7 @@ require "app/controllers/reports.php"; // Ensure this path is correct
 
     <!-- Report Section -->
     <div class="report-form">
-        <h2>User Reports Near Me</h2>
+        <h2>Reports Near Me</h2>
 
         <!-- Display Reports -->
         <section class="reports-section">
