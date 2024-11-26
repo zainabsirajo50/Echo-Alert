@@ -1,7 +1,7 @@
 <?php
 // signup.php
 session_start();
-
+include "path.php";
 require 'app/database/connection.php'; // Ensure this path is correct
 
 // Check if the connection is established
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->execute()) {
                 // Add JavaScript code to show popup after successful signup
                 echo '<script>alert("User registered successfully!");</script>';
-                header('Location: /~' . $pathname . '/Eco-Alert/login-form.php');
+                header('Location: ' . BASE_URL . '/login-form.php');
                 exit(); // Ensure no further code is executed after redirect
             } else {
                 echo "Error: " . $stmt->error; // Use stmt->error for error message
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <button type="submit" class="submit-button">Sign Up</button>
         </form>
-        <p class="signup-link">Already have an account? <a href="/~zsirajo1/src/LoginForm.php">Sign In</a></p>
+        <p class="signup-link">Already have an account? <a href='<?php echo BASE_URL; ?>/login-form.php'>Sign In</a></p>
     </div>
 </body>
 

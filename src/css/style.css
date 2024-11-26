@@ -64,7 +64,8 @@ header {
 }
 
 .events-container {
-    margin-top: 100px; /* To prevent content from being hidden under the fixed header */
+    margin-top: 100px;
+    /* To prevent content from being hidden under the fixed header */
     width: 80%;
     text-align: center;
 }
@@ -98,7 +99,8 @@ h2 {
     color: #348AA7;
 }
 
-.event-date, .event-location {
+.event-date,
+.event-location {
     font-size: 1.1em;
     color: #555;
     margin-top: 5px;
