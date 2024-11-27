@@ -4,6 +4,8 @@ session_start();
 include "path.php";
 require ROOT_PATH . "/app/database/connection.php";
 
+$user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
+
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     echo "You must be logged in to change your password.";
@@ -64,18 +66,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <header>
     <div class="header-container">
-        <div class="header-buttons">
-            <button onclick="window.location.href='<?php echo BASE_URL; ?>/user-homepage.php'">Home</button>
-            <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/reports/index.php'">Create Report</button>
-            <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View Events</button>
-        </div>
+    <div class="header-buttons">
+                <button onclick="window.location.href='<?php echo $user_type === 'govt_worker' ? BASE_URL . '/govt-homepage.php' : BASE_URL . '/user-homepage.php'; ?>'">
+                    Home
+                </button>
+                    <?php if ($user_type !== 'govt_worker'): ?>
+                        <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/reports/index.php'">Create
+                        Report</button>
 
-        <div class="header-search">
-            <form method="GET" action="search_results.php">
-                <input type="text" name="search_query" placeholder="Search reports or events..." required>
-                <button type="submit">Search</button>
-            </form>
-        </div>
+                    <?php endif; ?>
+                    <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View
+                        Events</button>
+                </div>
+
+                <div class="header-search">
+                    <form method="GET" action="search_results.php">
+                        <input type="text" name="search_query" placeholder="Search reports or events..." required>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
 
         <!-- Profile Dropdown -->
         <div class="profile-dropdown">

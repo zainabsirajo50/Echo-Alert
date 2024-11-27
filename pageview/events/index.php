@@ -1,6 +1,7 @@
 <?php
 include "../../path.php";
 include ROOT_PATH . "/app/controllers/events.php";
+$user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
 ?>
 
 <!DOCTYPE html>
@@ -18,13 +19,19 @@ include ROOT_PATH . "/app/controllers/events.php";
     <!-- Header Section with Buttons and Search Bar -->
     <header>
         <div class="header-container">
-            <div class="header-buttons">
-                <button onclick="window.location.href='<?php echo BASE_URL; ?>/user-homepage.php'">Home</button>
-                <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/reports/index.php'">Create
+        <div class="header-buttons">
+            <button onclick="window.location.href='<?php echo $user_type === 'govt_worker' ? BASE_URL . '/govt-homepage.php' : BASE_URL . '/user-homepage.php'; ?>'">
+                Home
+            </button>
+                <?php if ($user_type !== 'govt_worker'): ?>
+                    <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/reports/index.php'">Create
                     Report</button>
+
+                <?php endif; ?>
                 <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View
                     Events</button>
             </div>
+
 
             <div class="header-search">
                 <form method="GET" action="search_results.php">

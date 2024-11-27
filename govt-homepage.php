@@ -3,6 +3,8 @@
 
 include "path.php";
 require "app/controllers/reports.php"; // Ensure this path is correct
+
+$user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
 ?>
 
 <!DOCTYPE html>

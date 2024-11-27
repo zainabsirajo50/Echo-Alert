@@ -12,6 +12,7 @@ require ROOT_PATH . "/app/database/connection.php";
 $errors = [];
 $issue_type = '';
 $location = '';
+$user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
 
 // Check if the form was submitted via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

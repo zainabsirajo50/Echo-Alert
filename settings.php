@@ -6,6 +6,7 @@ require ROOT_PATH . "/app/database/connection.php";
 
 // Fetch user details from the database
 $user_id = $_SESSION['user_id'];
+$user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
 $query = "SELECT name, email, user_type FROM users WHERE id = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $user_id);
@@ -49,11 +50,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <header>
         <div class="header-container">
             <div class="header-buttons">
-                <button onclick="window.location.href='<?php echo BASE_URL; ?>/user-homepage.php'">Home</button>
+            <button onclick="window.location.href='<?php echo $user_type === 'govt_worker' ? BASE_URL . '/govt-homepage.php' : BASE_URL . '/user-homepage.php'; ?>'">
+                Home
+            </button>
                 <?php if ($user_type !== 'govt_worker'): ?>
                     <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/reports/index.php'">Create
                     Report</button>
-<?php endif; ?>
+
+                <?php endif; ?>
                 <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View
                     Events</button>
             </div>
