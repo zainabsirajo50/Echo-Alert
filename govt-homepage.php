@@ -2,8 +2,7 @@
 // report_submission.php
 session_start();
 include "path.php";
-require "app/database/connection.php"; // Ensure this path is correct
-
+require "app/controllers/reports.php"; // Ensure this path is correct
 ?>
 
 <!DOCTYPE html>
@@ -24,8 +23,7 @@ require "app/database/connection.php"; // Ensure this path is correct
             <div class="header-buttons">
                 <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View
                     Events</button>
-                    <button onclick="window.location.href='<?php echo BASE_URL; ?>/settings.php'">Settings
-                    </button> 
+                  
             </div>
 
             <div class="header-search">
@@ -35,6 +33,18 @@ require "app/database/connection.php"; // Ensure this path is correct
                 </form>
             </div>
 
+              <!-- Profile Dropdown -->
+              <div class="profile-dropdown">
+                <button class="profile-button">
+                    <?php echo $_SESSION['user_name']; ?>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="<?php echo BASE_URL; ?>/view_profile.php">View Profile</a>
+                    <a href="<?php echo BASE_URL; ?>/settings.php">Settings</a>
+                    <a href="<?php echo BASE_URL; ?>/logout.php">Logout</a>
+                </div>
+            </div>
+        </div>
         </div>
     </header>
 
@@ -42,7 +52,41 @@ require "app/database/connection.php"; // Ensure this path is correct
 
     <div class="report-form">
         <h2>Reports Near Me</h2>
+        <section class="reports-section">
+            <ul>
+                <?php if (!empty($reports)): ?>
+                    <?php foreach ($reports as $report): ?>
+                        <li class="report-item">
+                            <h3>
+                                <a href="<?php echo BASE_URL; ?>/view-reports.php?reportid=<?php echo $report['reportid']; ?>">
+                                    <?php echo htmlspecialchars($report['issue_type']); ?>
+                                </a>
+                            </h3>
+                            <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
+                            <p><strong>Date:</strong> <?php echo date('F j, Y', strtotime($report['date_reported'])); ?></p>
+                            <p><strong>Upvotes:</strong> <?php echo $report['upvote_count']; ?></p>
 
+                            <!-- Upvote Form -->
+                            <form method="POST" action="upvote.php">
+                                <input type="hidden" name="report_id" value="<?php echo $report['reportid']; ?>">
+                                <button type="submit" class="upvote-button">
+                                    ⬆
+                                </button>
+                            </form>
+                            <!-- Downvote Form -->
+                            <form method="POST" action="downvote.php">
+                                <input type="hidden" name="report_id" value="<?php echo $report['reportid']; ?>">
+                                <button type="submit" class="upvote-button">
+                                    ⬇
+                                </button>
+                            </form>
+                        </li>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No reports found.</p>
+                <?php endif; ?>
+            </ul>
+        </section>
     </div>
 
 </body>
