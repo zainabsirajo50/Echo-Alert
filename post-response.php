@@ -1,6 +1,7 @@
 <?php
 session_start();
 require "path.php";
+include "view-reports.php";
 require "app/database/connection.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -24,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['type'] = "error";
     }
 
-    header("Location: view_report.php?reportid=" . $reportid);
+    header("Location: view-reports.php?reportid=" . $reportid);
     exit();
 }
 ?>

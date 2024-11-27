@@ -50,8 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="header-container">
             <div class="header-buttons">
                 <button onclick="window.location.href='<?php echo BASE_URL; ?>/user-homepage.php'">Home</button>
-                <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/reports/index.php'">Create
+                <?php if ($user_type !== 'govt_worker'): ?>
+                    <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/reports/index.php'">Create
                     Report</button>
+<?php endif; ?>
                 <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View
                     Events</button>
             </div>
