@@ -10,9 +10,29 @@ require ROOT_PATH . "/app/database/connection.php";
 
 // Initialize an empty array to store any error messages
 $errors = [];
-$issue_type = '';
 $location = '';
 $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
+
+// Fetch issue types from the database
+function selectALLTypes($conn)
+{
+    $stmt = $conn->prepare("SELECT id, issue_name FROM issue_types ORDER BY id ASC");
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $issue_types = [];
+    while ($row = $result->fetch_assoc()) {
+        $issue_types[] = $row;
+    }
+
+    $stmt->close();
+
+    return $issue_types;
+}
+
+$issue_types = selectALLTypes($conn);
+
+
 
 // Check if the form was submitted via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -21,47 +41,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("You must be logged in to submit a report.");
     }
 
-    // Safely retrieve POST data, use empty string if not set
-    $issue_type = isset($_POST['issue_type']) ? trim($_POST['issue_type']) : '';
-    $location = isset($_POST['location']) ? trim($_POST['location']) : '';
+    // Sanitize and receive input
+    $issue_type_id = intval($_POST['issue_type_id']);
+    $location = trim($_POST['location']);
     $userid = $_SESSION['user_id'];
 
-    // Validation
-    if (empty($issue_type)) {
-        $errors[] = "Issue type is required.";
+    // Validate the inputs
+    if (empty($issue_type_id) || !is_numeric($issue_type_id)) {
+        $errors[] = "Please select a valid issue type.";
+    } else {
+        // Ensure the issue_type_id exists in the database
+        $stmt = $conn->prepare("SELECT id FROM issue_types WHERE id = ?");
+        $stmt->bind_param("i", $issue_type_id);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows === 0) {
+            $errors[] = "Selected issue type does not exist.";
+        }
+        $stmt->close();
     }
 
     if (empty($location)) {
         $errors[] = "Location is required.";
     }
 
-    // If no errors, proceed with database insertion
+    // If no errors, proceed to insert the data
     if (count($errors) === 0) {
-        $stmt = $conn->prepare("INSERT INTO reports (userid, issue_type, location) VALUES (?, ?, ?)");
-        
-        if ($stmt === false) {
-            $errors[] = "Error preparing the SQL statement.";
+        $stmt = $conn->prepare("INSERT INTO reports (userid, issue_type_id, location) VALUES (?, ?, ?)");
+        $stmt->bind_param("iis", $userid, $issue_type_id, $location);
+
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "Report submitted successfully!";
+            $_SESSION['type'] = "success-message";
+            header("Location: " . BASE_URL . "/pageview/reports/index.php");
+            exit();
+        } else {
+            $_SESSION['message'] = 'Failed to submit the report.';
+            $_SESSION['type'] = 'error-message';
         }
 
-        // Bind the parameters and execute
-        if (count($errors) === 0) {
-            $stmt->bind_param("iss", $userid, $issue_type, $location);
-
-            if ($stmt->execute()) {
-                // Success message
-                $_SESSION['message'] = 'Report submitted successfully!';
-                $_SESSION['type'] = 'success-message';
-                header("Location: " . BASE_URL . "/pageview/reports/index.php");
-                exit();
-            } else {
-                $_SESSION['message'] = 'Failed to submit the report.';
-                $_SESSION['type'] = 'error-message';
-            }
-
-            $stmt->close();
-        }
+        $stmt->close();
     }
 }
+
+
 
 // Fetch all reports from the database
 function selectALLReports($conn)

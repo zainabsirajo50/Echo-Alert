@@ -12,13 +12,13 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Report</title>
-    <link rel="stylesheet" href="../../src/css/LoginForm.css"> 
+    <link rel="stylesheet" href="../../src/css/LoginForm.css">
 </head>
 
 <body>
 
-     <!-- Header Section with Buttons and Search Bar -->
-     <header>
+    <!-- Header Section with Buttons and Search Bar -->
+    <header>
         <div class="header-container">
             <div class="header-buttons">
                 <button onclick="window.location.href='<?php echo $user_type === 'govt_worker' ? BASE_URL . '/govt-homepage.php' : BASE_URL . '/user-homepage.php'; ?>'">
@@ -44,7 +44,7 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
             <!-- Profile Dropdown -->
             <div class="profile-dropdown">
                 <button class="profile-button">
-                <div>
+                    <div>
                  Hi, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!
                 </div>
                 </button>
@@ -66,7 +66,13 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
 
             <div class="form-group">
                 <label>Issue Type:</label>
-                <input type="text" name="issue_type" value="<?php echo $issue_type; ?>">
+                <select name="issue_type_id" required>
+                    <option value="">Select an issue type</option>
+                    <?php foreach ($issue_types as $type): ?>
+
+                        <option value="<?php echo $type['id']; ?>"><?php echo $type['issue_name']; ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
             <div class="form-group">
                 <label>Location:</label>
