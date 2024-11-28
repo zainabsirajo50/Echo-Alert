@@ -401,7 +401,7 @@ input:focus {
 
 .status-resolved {
     color: white;
-    background-color: #5bc0de; /* Light blue */
+    background-color: #5cb85c; /* Light blue */
     padding: 5px 10px;
     border-radius: 5px;
     font-weight: bold;
