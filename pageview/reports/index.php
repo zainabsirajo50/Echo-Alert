@@ -10,13 +10,13 @@ include(ROOT_PATH . "/app/controllers/reports.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Report</title>
-    <link rel="stylesheet" href="../../src/css/LoginForm.css"> 
+    <link rel="stylesheet" href="../../src/css/LoginForm.css">
 </head>
 
 <body>
 
-     <!-- Header Section with Buttons and Search Bar -->
-     <header>
+    <!-- Header Section with Buttons and Search Bar -->
+    <header>
         <div class="header-container">
             <div class="header-buttons">
                 <button onclick="window.location.href='<?php echo BASE_URL; ?>/user-homepage.php'">Home</button>
@@ -36,7 +36,7 @@ include(ROOT_PATH . "/app/controllers/reports.php");
             <!-- Profile Dropdown -->
             <div class="profile-dropdown">
                 <button class="profile-button">
-                <?php echo $_SESSION['user_name']; ?>
+                    <?php echo $_SESSION['user_name']; ?>
                 </button>
                 <div class="dropdown-menu">
                     <a href="<?php echo BASE_URL; ?>/view_profile.php">View Profile</a>
@@ -56,7 +56,13 @@ include(ROOT_PATH . "/app/controllers/reports.php");
 
             <div class="form-group">
                 <label>Issue Type:</label>
-                <input type="text" name="issue_type" value="<?php echo $issue_type; ?>">
+                <select name="issue_type_id" required>
+                    <option value="">Select an issue type</option>
+                    <?php foreach ($issue_types as $type): ?>
+
+                        <option value="<?php echo $type['id']; ?>"><?php echo $type['issue_name']; ?></option>
+                    <?php endforeach; ?>
+                </select>
             </div>
             <div class="form-group">
                 <label>Location:</label>
