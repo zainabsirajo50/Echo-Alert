@@ -44,7 +44,9 @@ require "app/controllers/reports.php"; // Ensure this path is correct
             <!-- Profile Dropdown -->
             <div class="profile-dropdown">
                 <button class="profile-button">
-                    <?php echo $_SESSION['user_name']; ?>
+                <div>
+                 Hi, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!
+                </div>
                 </button>
                 <div class="dropdown-menu">
                     <a href="<?php echo BASE_URL; ?>/view_profile.php">View Profile</a>
