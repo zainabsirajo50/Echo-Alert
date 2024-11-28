@@ -8,7 +8,7 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
 } else {
-    echo "";
+    echo "<br>";
 }
 
 // Ensure the 'user_type' column exists in the users table
@@ -84,7 +84,7 @@ foreach ($default_issue_types as $type) {
     $stmt = $conn->prepare("INSERT IGNORE INTO issue_types (issue_name) VALUES (?)");
     $stmt->bind_param("s", $type);
     if ($stmt->execute()) {
-        echo "";
+        echo "<br>";
     } else {
         echo "Error adding issue type '$type': " . $conn->error . "<br>";
     }
