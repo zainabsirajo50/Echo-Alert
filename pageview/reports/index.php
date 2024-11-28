@@ -44,7 +44,7 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
             <!-- Profile Dropdown -->
             <div class="profile-dropdown">
                 <button class="profile-button">
-                    <div>
+                <div>
                  Hi, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!
                 </div>
                 </button>

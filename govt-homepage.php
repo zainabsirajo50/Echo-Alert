@@ -70,12 +70,34 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
                     <!-- Wrap the entire report card inside an <a> tag -->
                     <a href="<?php echo BASE_URL; ?>/view-reports.php?reportid=<?php echo $report['reportid']; ?>" class="report-link">
                         <li class="report-item">
-                            <h3><?php echo htmlspecialchars($report['issue_type']); ?></h3>
+                            <h3>Issue #<?php echo htmlspecialchars($report['issue_type_id']); ?></h3>
                             <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
                             <p><strong>Date:</strong> <?php echo date('F j, Y', strtotime($report['date_reported'])); ?></p>
                             <p><strong>Upvotes:</strong> <?php echo $report['upvote_count']; ?></p>
-
-                            <!-- Inline upvote and downvote buttons -->
+                            
+                                <!-- Display the status with corresponding color -->
+                                <p><strong>Status:</strong>
+                                    <?php 
+                                        $status = htmlspecialchars($report['status']);
+                                        // Style based on the status value
+                                        $status_class = '';
+                                        switch ($status) {
+                                            case 'Pending':
+                                                $status_class = 'status-pending';
+                                                break;
+                                            case 'In Progress':
+                                                $status_class = 'status-in-progress';
+                                                break;
+                                            case 'Resolved':
+                                                $status_class = 'status-resolved';
+                                                break;
+                                            default:
+                                                $status_class = 'status-default';
+                                        }
+                                    ?>
+                                    <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
+                                </p>
+                   
                             
                         </li>
                     </a>
