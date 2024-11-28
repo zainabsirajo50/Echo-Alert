@@ -11,6 +11,7 @@ require ROOT_PATH . "/app/database/connection.php";
 // Initialize an empty array to store any error messages
 $errors = [];
 $location = '';
+$user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
 
 // Fetch issue types from the database
 function selectALLTypes($conn)

@@ -8,13 +8,20 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
 } else {
-    echo "Successfully connected to database.<br>";
+    echo "<br>";
 }
 
 // Ensure the 'user_type' column exists in the users table
 $result = $conn->query("SHOW COLUMNS FROM users LIKE 'user_type'");
 if ($result->num_rows == 0) {
     $conn->query("ALTER TABLE users ADD COLUMN user_type VARCHAR(100) NOT NULL");
+}
+
+// Ensure the 'user_type' column exists in the users table
+$result = $conn->query("SHOW COLUMNS FROM reports LIKE 'status'");
+if ($result->num_rows == 0) {
+    // Add column if it doesn't exist
+    $conn->query("ALTER TABLE reports ADD COLUMN status ENUM('Pending', 'In Progress', 'Resolved') NOT NULL DEFAULT 'Pending'");
 }
 
 // Create the 'users' table if it does not exist
@@ -59,7 +66,7 @@ if (
     $conn->query($sql_create_events) === TRUE &&
     $conn->query($sql_create_issue_types) === TRUE
 ) {
-    echo "Tables created successfully.<br>";
+    echo "";
 } else {
     echo "Error creating table: " . $conn->error . "<br>";
 }
@@ -77,7 +84,7 @@ foreach ($default_issue_types as $type) {
     $stmt = $conn->prepare("INSERT IGNORE INTO issue_types (issue_name) VALUES (?)");
     $stmt->bind_param("s", $type);
     if ($stmt->execute()) {
-        echo "Default issue type '$type' added successfully.<br>";
+        echo "<br>";
     } else {
         echo "Error adding issue type '$type': " . $conn->error . "<br>";
     }

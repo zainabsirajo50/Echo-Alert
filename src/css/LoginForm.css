@@ -346,39 +346,119 @@ input:focus {
     display: block;
 }
 
+.report-link {
+    text-decoration: none;
+    color: inherit;
+}
+
 .report-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    transition: box-shadow 0.3s ease;
+}
+
+.report-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #f9f9f9;
+}
+
+.vote-buttons {
     display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+    gap: 5px;
+    margin-top: 10px;
 }
 
-.upvote-container {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start; /* Align to the left of the container */
-    gap: 10px; /* Space between upvotes count and the arrow */
+.upvote-button, .downvote-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-.upvote-count {
-    font-size: 18px; /* Adjust size of the upvote count */
-    color: #348AA7;  /* Adjust color */
+.upvote-button:hover, .downvote-button:hover {
+    color: #348AA7;
 }
 
-.upvote-button {
+
+/* Style for the status text */
+.status-pending {
+    color: white;
+    background-color: #f0ad4e; /* Orange */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status-in-progress {
+    color: white;
+    background-color: #0275d8; /* Blue */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status-resolved {
+    color: white;
+    background-color: #5cb85c; /* Light blue */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status-default {
+    color: black;
+    background-color: #f1f1f1; /* Default gray */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: normal;
+}
+
+/* Optional: style for the form */
+.select-status-container {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.select-status {
+    padding: 8px 15px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    color: #333;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.submit-button {
+    padding: 10px 20px;
     background-color: #348AA7;
-    color: white; 
-    border: none;  
-    border-radius: 5px;  
-    padding: 8px 12px; 
-    font-size: 10px; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease; 
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.upvote-button:hover {
-    background-color: #1D6F81;
+.submit-button:hover {
+    background-color: #267b8e;
 }
 
-.upvote-button:active {
-    background-color: #145a69; 
+/* Button styling */
+.submit-button {
+    padding: 10px 20px;
+    background-color: #348AA7;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #267b8e;
 }
