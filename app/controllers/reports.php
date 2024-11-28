@@ -15,7 +15,7 @@ $location = '';
 // Fetch issue types from the database
 function selectALLTypes($conn)
 {
-    $stmt = $conn->prepare("SELECT id, issue_name FROM issue_types ORDER BY issue_name ASC");
+    $stmt = $conn->prepare("SELECT id, issue_name FROM issue_types ORDER BY id ASC");
     $stmt->execute();
     $result = $stmt->get_result();
 
