@@ -53,6 +53,16 @@ $sql_create_events = "CREATE TABLE IF NOT EXISTS events (
     event_description TEXT
 );";
 
+$sql_create_responses = "CREATE TABLE IF NOT EXISTS responses (
+    responseid INT AUTO_INCREMENT PRIMARY KEY,
+    reportid INT NOT NULL,
+    userid INT NOT NULL,
+    response_text TEXT NOT NULL,
+    response_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (reportid) REFERENCES reports(reportid) ON DELETE CASCADE,
+    FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE
+);";
+
 // Create the 'issue_types' table if it does not exist
 $sql_create_issue_types = "CREATE TABLE IF NOT EXISTS issue_types (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -64,7 +74,8 @@ if (
     $conn->query($sql_create_users) === TRUE &&
     $conn->query($sql_create_reports) === TRUE &&
     $conn->query($sql_create_events) === TRUE &&
-    $conn->query($sql_create_issue_types) === TRUE
+    $conn->query($sql_create_issue_types) === TRUE &&
+    $conn->query($sql_create_responses) === TRUE
 ) {
     echo "";
 } else {
