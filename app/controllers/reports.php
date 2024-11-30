@@ -13,27 +13,6 @@ $errors = [];
 $location = '';
 $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
 
-// Fetch issue types from the database
-function selectALLTypes($conn)
-{
-    $stmt = $conn->prepare("SELECT id, issue_name FROM issue_types ORDER BY id ASC");
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $issue_types = [];
-    while ($row = $result->fetch_assoc()) {
-        $issue_types[] = $row;
-    }
-
-    $stmt->close();
-
-    return $issue_types;
-}
-
-$issue_types = selectALLTypes($conn);
-
-
-
 // Check if the form was submitted via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -90,7 +69,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Fetch all reports from the database
 function selectALLReports($conn)
 {
-    $stmt = $conn->prepare("SELECT * FROM reports");
+    $stmt = $conn->prepare("
+        SELECT 
+            r.reportid,
+            it.issue_name,
+            r.location,
+            r.date_reported,
+            r.status,
+            r.upvote_count
+        FROM 
+            reports r
+        JOIN 
+            issue_types it ON r.issue_type_id = it.id
+        ORDER BY 
+            r.date_reported ASC
+    ");
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -100,9 +93,136 @@ function selectALLReports($conn)
     }
 
     $stmt->close();
+    return $reports;
+}
+// Call the function to fetch reports
+$reports = selectALLReports($conn);
 
+// Fetch issue types from the database
+function selectALLTypes($conn)
+{
+    $stmt = $conn->prepare("SELECT id, issue_name FROM issue_types ORDER BY id ASC");
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $issue_types = [];
+    while ($row = $result->fetch_assoc()) {
+        $issue_types[] = $row;
+    }
+
+    $stmt->close();
+
+    return $issue_types;
+}
+
+$issue_types = selectALLTypes($conn);
+
+// Fetch reports based on search query for issue name or location
+function searchReportsByQuery($conn, $search_query)
+{
+    // Base SQL query
+    $sql = "
+        SELECT 
+            r.reportid,
+            it.issue_name,
+            r.location,
+            r.date_reported,
+            r.status,
+            r.upvote_count
+        FROM 
+            reports r
+        JOIN 
+            issue_types it ON r.issue_type_id = it.id
+        WHERE 
+            it.issue_name LIKE ? OR r.location LIKE ?
+        ORDER BY 
+            r.date_reported DESC
+    ";
+
+    // Prepare the SQL statement
+    $stmt = $conn->prepare($sql);
+
+    // Bind the search query as a LIKE parameter
+    $like_query = "%" . $search_query . "%";
+    $stmt->bind_param("ss", $like_query, $like_query);
+
+    // Execute the statement
+    $stmt->execute();
+
+    // Get the result
+    $result = $stmt->get_result();
+
+    // Fetch all matching reports
+    $reports = [];
+    while ($row = $result->fetch_assoc()) {
+        $reports[] = $row;
+    }
+
+    // Close the statement and return the reports
+    $stmt->close();
     return $reports;
 }
 
-// Call the function to fetch reports
-$reports = selectALLReports($conn);
+// Fetch most recent reports
+function selectRecentReports($conn)
+{
+    $sql = "
+        SELECT 
+            r.reportid,
+            it.issue_name,
+            r.location,
+            r.date_reported,
+            r.status,
+            r.upvote_count
+        FROM 
+            reports r
+        JOIN 
+            issue_types it ON r.issue_type_id = it.id
+        ORDER BY 
+            r.date_reported DESC
+    ";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $reports = [];
+    while ($row = $result->fetch_assoc()) {
+        $reports[] = $row;
+    }
+
+    $stmt->close();
+    return $reports;
+}
+
+// Fetch most voted reports
+function selectMostVotedReports($conn)
+{
+    $sql = "
+        SELECT 
+            r.reportid,
+            it.issue_name,
+            r.location,
+            r.date_reported,
+            r.status,
+            r.upvote_count
+        FROM 
+            reports r
+        JOIN 
+            issue_types it ON r.issue_type_id = it.id
+        ORDER BY 
+            r.upvote_count DESC
+    ";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    $reports = [];
+    while ($row = $result->fetch_assoc()) {
+        $reports[] = $row;
+    }
+
+    $stmt->close();
+    return $reports;
+}
+
+
