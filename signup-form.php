@@ -1,13 +1,8 @@
 <?php
 // signup.php
 session_start();
-<<<<<<< HEAD
-
-require 'connection.php'; // Ensure this path is correct
-=======
 include "path.php";
 require 'app/database/connection.php'; // Ensure this path is correct
->>>>>>> b99f1837324aa1c9725f4b6b6e47f3377b2074d5
 
 // Check if the connection is established
 if ($conn->connect_error) {
@@ -23,18 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirmPassword = $_POST['confirm_password'] ?? '';
     $userType = $_POST['user_type'] ?? 'community_member'; // Default to community_member if not selected
 
-<<<<<<< HEAD
-
-    // Basic validation
-    if ($password === $confirmPassword) {
-        // Hash the password for security
-        
-=======
     // Basic validation
     if ($password === $confirmPassword) {
         // Hash the password for security
 
->>>>>>> b99f1837324aa1c9725f4b6b6e47f3377b2074d5
 
         // Prepare and bind
         $insert_user_query = "INSERT INTO users (name, email, password, user_type) VALUES (?, ?, ?, ?)";
@@ -47,11 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->execute()) {
                 // Add JavaScript code to show popup after successful signup
                 echo '<script>alert("User registered successfully!");</script>';
-<<<<<<< HEAD
-                header("Location: /~zsirajo1/src/LoginForm.php");
-=======
                 header('Location: ' . BASE_URL . '/login-form.php');
->>>>>>> b99f1837324aa1c9725f4b6b6e47f3377b2074d5
                 exit(); // Ensure no further code is executed after redirect
             } else {
                 echo "Error: " . $stmt->error; // Use stmt->error for error message
