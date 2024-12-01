@@ -13,15 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("iis", $reportid, $userid, $response_text);
         if ($stmt->execute()) {
             $_SESSION['message'] = "Response posted successfully!";
-            $_SESSION['type'] = "success";
+            $_SESSION['type'] = "success-message";
         } else {
             $_SESSION['message'] = "Failed to post the response.";
-            $_SESSION['type'] = "error";
+            $_SESSION['type'] = "error-message";
         }
         $stmt->close();
     } else {
         $_SESSION['message'] = "Invalid response or report ID.";
-        $_SESSION['type'] = "error";
+        $_SESSION['type'] = "error-message";
     }
 
     header("Location: view-reports.php?reportid=" . $reportid);

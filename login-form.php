@@ -29,15 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Set session variables, redirect, etc.
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
-            $_SESSION['user_type'] = $user['user_type'];
+            $_SESSION['role'] = $user['user_type'];
             echo "Success!";
 
-            if ($user['user_type'] === 'govt_worker') {
-                header('Location: ' . BASE_URL . '/govt-homepage.php');// Government worker dashboard page
+            if($user['user_type'] === 'community_member'){
+                header('Location: ' . BASE_URL . '/user-homepage.php');
+                exit();
+            } elseif($user['user_type'] === 'govt_worker') {
+                header('Location: ' . BASE_URL . '/govt-homepage.php');
+                exit();
             } else {
-                header('Location: ' . BASE_URL . '/user-homepage.php'); // Community member dashboard page
+                echo "Invalid role.";
             }
-            exit();
         } else {
             echo "Invalid email or password.";
         }

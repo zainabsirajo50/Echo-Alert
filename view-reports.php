@@ -30,43 +30,39 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/css/response-page.css"> <!-- Link to the updated CSS -->
-    <link rel="stylesheet" href="src/css/LoginForm.css"> 
+    <link rel="stylesheet" href="src/css/LoginForm.css">
     <title>View Report</title>
 </head>
+
 <body>
 
     <header>
         <div class="header-container">
             <div class="header-buttons">
-                <button onclick="window.location.href='<?php echo $user_type === 'govt_worker' ? BASE_URL . '/govt-homepage.php' : BASE_URL . '/user-homepage.php'; ?>'">
+                <button
+                    onclick="window.location.href='<?php echo $user_type === 'govt_worker' ? BASE_URL . '/govt-homepage.php' : BASE_URL . '/user-homepage.php'; ?>'">
                     Home
                 </button>
-                    <?php if ($user_type !== 'govt_worker'): ?>
-                        <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/reports/index.php'">Create
+                <?php if ($user_type !== 'govt_worker'): ?>
+                    <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/reports/index.php'">Create
                         Report</button>
 
-                    <?php endif; ?>
-                    <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View
-                        Events</button>
-                </div>
+                <?php endif; ?>
+                <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View
+                    Events</button>
+            </div>
 
-                <div class="header-search">
-                    <form method="GET" action="search_results.php">
-                        <input type="text" name="search_query" placeholder="Search reports or events..." required>
-                        <button type="submit">Search</button>
-                    </form>
-                </div>
-    
-              <!-- Profile Dropdown -->
-              <div class="profile-dropdown">
+            <!-- Profile Dropdown -->
+            <div class="profile-dropdown">
                 <button class="profile-button">
-                <div>
-                 Hi, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!
-                </div>
+                    <div>
+                        Hi, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!
+                    </div>
                 </button>
                 <div class="dropdown-menu">
                     <a href="<?php echo BASE_URL; ?>/view_profile.php">View Profile</a>
@@ -81,49 +77,54 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
     <div class="response-card">
         <div class="report-info">
             <h1>Report Details</h1>
-                <p><strong>Issue Type:</strong> <?php echo htmlspecialchars($report['issue_type']); ?></p>
-                <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
-                <p><strong>Date Reported:</strong> <em>(<?php echo date('M j, Y', strtotime($response['response_date'])); ?>)</em></p>
-                <p><strong>Upvotes:</strong> <?php echo htmlspecialchars($report['upvote_count']); ?></p>
-                <p><strong>Status:</strong> 
-                    <?php 
-                        $status = htmlspecialchars($report['status']);
-                        // Style based on the status value
-                        $status_class = '';
-                        switch ($status) {
-                            case 'Pending':
-                                $status_class = 'status-pending';
-                                break;
-                            case 'In Progress':
-                                $status_class = 'status-in-progress';
-                                break;
-                            case 'Resolved':
-                                $status_class = 'status-resolved';
-                                break;
-                            default:
-                                $status_class = 'status-default';
-                        }
-                    ?>
-                    
-                    <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
+            <p><strong>Issue Type:</strong> <?php echo htmlspecialchars($report['issue_type']); ?></p>
+            <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
+            <p><strong>Date Reported:</strong>
+                <em>(<?php echo date('M j, Y', strtotime($response['response_date'])); ?>)</em>
+            </p>
+            <p><strong>Upvotes:</strong> <?php echo htmlspecialchars($report['upvote_count']); ?></p>
+            <p><strong>Status:</strong>
+                <?php
+                $status = htmlspecialchars($report['status']);
+                // Style based on the status value
+                $status_class = '';
+                switch ($status) {
+                    case 'Pending':
+                        $status_class = 'status-pending';
+                        break;
+                    case 'In Progress':
+                        $status_class = 'status-in-progress';
+                        break;
+                    case 'Resolved':
+                        $status_class = 'status-resolved';
+                        break;
+                    default:
+                        $status_class = 'status-default';
+                }
+                ?>
 
-                    <?php if ($user_type === 'govt_worker'): ?>
-                        <form action="update-report-status.php" method="POST">
-                            <div class="select-status-container">
-                                <select name="status" id="status" class="select-status" required>
-                                    <option value="Pending" <?php echo $report['status'] === 'Pending' ? 'selected' : ''; ?>>Pending</option>
-                                    <option value="In Progress" <?php echo $report['status'] === 'In Progress' ? 'selected' : ''; ?>>In Progress</option>
-                                    <option value="Resolved" <?php echo $report['status'] === 'Resolved' ? 'selected' : ''; ?>>Resolved</option>
-                                </select>
-                            </div>
-                            <input type="hidden" name="reportid" value="<?php echo $reportid; ?>">
-                            <button type="submit" class="submit-button">Update Status</button>
-                        </form>
-                    <?php endif; ?>
-                </p>
+                <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
+
+                <?php if ($user_type === 'govt_worker'): ?>
+                <form action="update-report-status.php" method="POST">
+                    <div class="select-status-container">
+                        <select name="status" id="status" class="select-status" required>
+                            <option value="Pending" <?php echo $report['status'] === 'Pending' ? 'selected' : ''; ?>>Pending
+                            </option>
+                            <option value="In Progress" <?php echo $report['status'] === 'In Progress' ? 'selected' : ''; ?>>
+                                In Progress</option>
+                            <option value="Resolved" <?php echo $report['status'] === 'Resolved' ? 'selected' : ''; ?>>
+                                Resolved</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="reportid" value="<?php echo $reportid; ?>">
+                    <button type="submit" class="submit-button">Update Status</button>
+                </form>
+            <?php endif; ?>
+            </p>
         </div>
 
-        
+
         <div class="response-section">
             <h2>Responses</h2>
             <?php if ($responses->num_rows > 0): ?>
@@ -144,8 +145,9 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
             <h2>Post a Response</h2>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <form action="post-response.php" method="POST">
-                    <textarea name="response_text" rows="5" placeholder="Write your response here..." required></textarea><br>
-                    
+                    <textarea name="response_text" rows="5" placeholder="Write your response here..."
+                        required></textarea><br>
+
                     <input type="hidden" name="reportid" value="<?php echo $reportid; ?>">
                     <button class="submit-button" type="submit">Submit Response</button>
                 </form>
@@ -154,7 +156,9 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
             <?php endif; ?>
         </div>
         <br>
-        <a href="<?php echo BASE_URL; ?>/govt-homepage.php" style="text-decoration: none; font-size: 16px; color: #348AA7;">&larr; Back to Homepage</a>
+        <a href="<?php echo BASE_URL; ?>/govt-homepage.php"
+            style="text-decoration: none; font-size: 16px; color: #348AA7;">&larr; Back to Homepage</a>
     </div>
 </body>
+
 </html>
