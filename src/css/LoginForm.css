@@ -53,22 +53,62 @@ li {
     background-color: #256c82;
 }
 
-.header-search form {
+/* Navbar Styling */
+.navbar {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+    margin-top: 0px;
+}
+
+.navbar-list {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+
+
+}
+
+.navbar-list li {
+    display: inline;
+}
+
+
+.navbar-list a {
+    color: #348AA7;
+    text-decoration: none;
+    font-size: 16px;
+    border: 1px solid rgba(52, 138, 167, 0.8);
+    padding: 9px;
+    border-radius: 10px;
+}
+
+.navbar-list a:hover {
+    color: rgb(0, 0, 0);
+    background-color: rgba(52, 138, 167, 0.8);
+}
+
+/* Navbar Search Styling */
+.navbar-search form {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.header-search input {
+.navbar-search input {
     padding: 8px;
     font-size: 14px;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 200px;
-    /* Reduced width for smaller search bar */
 }
 
-.header-search button {
+.navbar-search button {
     background-color: #348AA7;
     color: white;
     border: none;
@@ -78,7 +118,7 @@ li {
     border-radius: 5px;
 }
 
-.header-search button:hover {
+.navbar-search button:hover {
     background-color: #256c82;
 }
 
@@ -187,7 +227,7 @@ input:focus {
     width: 400px;
     height: auto;
     box-sizing: border-box;
-    margin-top: 80px;
+    margin-top: 10px;
     /* Adjusts space below the header */
 }
 
@@ -292,4 +332,179 @@ input:focus {
 
 .report-item strong {
     font-weight: bold;
+}
+
+/* Profile dropdown styling */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-button {
+    background-color: #348AA7;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.profile-button:hover {
+    background-color: #287289;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-width: 150px;
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.dropdown-menu a {
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #ddd;
+}
+
+.dropdown-menu a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+.profile-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.report-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.report-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    transition: box-shadow 0.3s ease;
+}
+
+.report-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #f9f9f9;
+}
+
+.vote-buttons {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.upvote-button,
+.downvote-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.upvote-button:hover,
+.downvote-button:hover {
+    color: #348AA7;
+}
+
+
+/* Style for the status text */
+.status-pending {
+    color: white;
+    background-color: #f0ad4e;
+    /* Orange */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status-in-progress {
+    color: white;
+    background-color: #0275d8;
+    /* Blue */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status-resolved {
+    color: white;
+    background-color: #5cb85c;
+    /* Light blue */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.status-default {
+    color: black;
+    background-color: #f1f1f1;
+    /* Default gray */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: normal;
+}
+
+/* Optional: style for the form */
+.select-status-container {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.select-status {
+    padding: 8px 15px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    color: #333;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    background-color: #348AA7;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #267b8e;
+}
+
+/* Button styling */
+.submit-button {
+    padding: 10px 20px;
+    background-color: #348AA7;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #267b8e;
 }
