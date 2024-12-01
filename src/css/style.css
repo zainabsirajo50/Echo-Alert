@@ -1,0 +1,263 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F2F3D9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+header {
+    width: 100%;
+    background-color: #348AA7;
+    color: white;
+    padding: 15px;
+    font-size: 1.5em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+li {
+    list-style: none;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.header-buttons button {
+    background-color: #348AA7;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.header-buttons button:hover {
+    background-color: #256c82;
+}
+
+.header-search form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-search input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+    /* Reduced width for smaller search bar */
+}
+
+.header-search button {
+    background-color: #348AA7;
+    color: white;
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.header-search button:hover {
+    background-color: #256c82;
+}
+
+/* Navbar Styling */
+.navbar {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+    margin-top: 0px;
+}
+
+.navbar-list {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+
+
+}
+
+.navbar-list li {
+    display: inline;
+}
+
+
+.navbar-list a {
+    color: #348AA7;
+    text-decoration: none;
+    font-size: 16px;
+    border: 1px solid rgba(52, 138, 167, 0.8);
+    padding: 9px;
+    border-radius: 10px;
+}
+
+.navbar-list a:hover {
+    color: rgb(0, 0, 0);
+    background-color: rgba(52, 138, 167, 0.8);
+}
+
+/* Navbar Search Styling */
+.navbar-search form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-search input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.navbar-search button {
+    background-color: #348AA7;
+    color: white;
+    border: none;
+    padding: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.navbar-search button:hover {
+    background-color: #256c82;
+}
+
+.events-container {
+    margin-top: 100px;
+    /* To prevent content from being hidden under the fixed header */
+    width: 80%;
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.events-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.event-card {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: box-shadow 0.3s;
+}
+
+.event-card:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.event-name {
+    font-size: 1.5em;
+    color: #348AA7;
+}
+
+.event-date,
+.event-location {
+    font-size: 1.1em;
+    color: #555;
+    margin-top: 5px;
+}
+
+.event-description {
+    font-size: 1em;
+    color: #333;
+    margin-top: 15px;
+}
+
+footer {
+    width: 100%;
+    background-color: #348AA7;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    bottom: 0;
+    margin-top: auto;
+}
+
+/* Profile dropdown styling */
+.profile-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-button {
+    background-color: #348AA7;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.profile-button:hover {
+    background-color: #287289;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-width: 150px;
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.dropdown-menu a {
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #ddd;
+}
+
+.dropdown-menu a:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+.profile-dropdown:hover .dropdown-menu {
+    display: block;
+}

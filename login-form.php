@@ -1,7 +1,12 @@
 <?php
+// login.php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 session_start();
-require 'connection.php'; // Ensure the path is correct and it establishes $conn
+include "path.php";
+require 'app/database/connection.php'; // Ensure the path is correct and it establishes $conn
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get email and password from POST request
@@ -24,16 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Set session variables, redirect, etc.
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
-            $_SESSION['user_type'] = $user['user_type'];
-
+            $_SESSION['role'] = $user['user_type'];
             echo "Success!";
-            // Redirect based on user type
-                    if ($user['user_type'] === 'govt_worker') {
-                        header("Location: /~zsirajo1/src/govt-homepage.php"); // Government worker dashboard page
-                    } else {
-                        header("Location: /~zsirajo1/src/user-homepage.php"); // Community member dashboard page
-                    }
-            exit();
+
+            if($user['user_type'] === 'community_member'){
+                header('Location: ' . BASE_URL . '/user-homepage.php');
+                exit();
+            } elseif($user['user_type'] === 'govt_worker') {
+                header('Location: ' . BASE_URL . '/govt-homepage.php');
+                exit();
+            } else {
+                echo "Invalid role.";
+            }
         } else {
             echo "Invalid email or password.";
         }
@@ -49,12 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="LoginForm.css">
+    <link rel="stylesheet" href="src/css/LoginForm.css">
     <title>Login</title>
 </head>
+
 <body>
     <div class="login-form">
         <h2>Login</h2>
@@ -69,7 +78,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <button type="submit" class="submit-button">Login</button>
         </form>
-        <p class="signup-link">Don't have an account? <a href="/~zsirajo1/src/SignupForm.php">Sign up here</a></p>
+        <p class="signup-link">Don't have an account? <a href='<?php echo BASE_URL; ?>/signup-form.php'>Sign up here</a></p>
     </div>
 </body>
+
 </html>

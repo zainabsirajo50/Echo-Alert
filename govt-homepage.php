@@ -1,42 +1,10 @@
 <?php
 // report_submission.php
-session_start();
-require 'connection.php'; // Ensure this path is correct
 
-// Check if the connection is established
-if ($conn->connect_error) {
-    die("Database connection failed: " . $conn->connect_error);
-}
+include "path.php";
+require "app/controllers/reports.php"; // Ensure this path is correct
 
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the form data
-    $userid = $_SESSION['userid']; // Assuming user is logged in and userid is stored in session
-    $issueType = $_POST['issue_type'] ?? '';
-    $location = $_POST['location'] ?? '';
-
-
-    // Insert the report into the database
-    $insert_report_query = "INSERT INTO reports (userid, issue_type, location) VALUES (?, ?, ?)";
-    $stmt = $conn->prepare($insert_report_query);
-
-    if ($stmt) {
-        $stmt->bind_param("iss", $userid, $issueType, $location);
-
-        // Execute the statement
-        if ($stmt->execute()) {
-            echo '<script>alert("Report submitted successfully!");</script>';
-            // Redirect or display a success message
-        } else {
-            echo "Error: " . $stmt->error;
-        }
-
-        // Close the statement
-        $stmt->close();
-    } else {
-        echo "Error preparing statement: " . $conn->error;
-    }
-}
+$user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
 
 ?>
 
@@ -46,33 +14,112 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Report</title>
-    <link rel="stylesheet" href="LoginForm.css">
+    <link rel="stylesheet" href="src/css/LoginForm.css">
 </head>
+
 <body>
 
-<!-- Header Section with Buttons and Search Bar -->
-<header>
-    <div class="header-container">
-        <div class="header-buttons">
-            <button onclick="window.location.href='eventspage.php'">View Events</button>
-        </div>
+    <!-- Header Section with Buttons and Search Bar -->
+    <header>
 
-        <div class="header-search">
-            <form method="GET" action="search_results.php">
-                <input type="text" name="search_query" placeholder="Search reports or events..." required>
+        <div class="header-container">
+            <div class="header-buttons">
+                <!-- Dynamically set the link based on user type -->
+                <button
+                    onclick="window.location.href='<?php echo $user_type === 'govt_worker' ? BASE_URL . '/govt-homepage.php' : BASE_URL . '/user-homepage.php'; ?>'">
+                    Home
+                </button>
+            </div>
+            <div class="header-buttons">
+                <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View
+                    Events</button>
+
+            </div>
+
+            <!-- Profile Dropdown -->
+            <div class="profile-dropdown">
+                <button class="profile-button">
+                    <div>
+                        Hi, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!
+                    </div>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="<?php echo BASE_URL; ?>/view_profile.php">View Profile</a>
+                    <a href="<?php echo BASE_URL; ?>/settings.php">Settings</a>
+                    <a href="<?php echo BASE_URL; ?>/logout.php">Logout</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <ul class="navbar-list">
+            <li><a href="govt-homepage.php">All</a></li>
+            <li><a href="govt-homepage.php?filter=recent">Recents</a></li>
+            <li><a href="govt-homepage.php?filter=most_votes">Most Votes</a></li>
+        </ul>
+        <div class="navbar-search">
+            <form method="GET" action="govt-homepage.php">
+                <input type="text" name="search_query" placeholder="Search by location and issue..."
+                    value="<?php echo isset($_GET['search_query']) ? htmlspecialchars($_GET['search_query']) : ''; ?>">
                 <button type="submit">Search</button>
             </form>
         </div>
+    </nav>
 
+    <!-- Report Submission Form -->
+
+    <div class="report-form">
+        <h2>Reports Near Me</h2>
+        <section class="reports-section">
+            <ul>
+                <?php if (!empty($reports)): ?>
+                    <?php foreach ($reports as $report): ?>
+                        <!-- Wrap the entire report card inside an <a> tag -->
+                        <a href="<?php echo BASE_URL; ?>/view-reports.php?reportid=<?php echo $report['reportid']; ?>"
+                            class="report-link">
+                            <li class="report-item">
+                                <h3>Issue #<?php echo htmlspecialchars($report['issue_name']); ?></h3>
+                                <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
+                                <p><strong>Date:</strong> <?php echo date('F j, Y', strtotime($report['date_reported'])); ?></p>
+                                <p><strong>Upvotes:</strong> <?php echo $report['upvote_count']; ?></p>
+
+                                <!-- Display the status with corresponding color -->
+                                <p><strong>Status:</strong>
+                                    <?php
+                                    $status = htmlspecialchars($report['status']);
+                                    // Style based on the status value
+                                    $status_class = '';
+                                    switch ($status) {
+                                        case 'Pending':
+                                            $status_class = 'status-pending';
+                                            break;
+                                        case 'In Progress':
+                                            $status_class = 'status-in-progress';
+                                            break;
+                                        case 'Resolved':
+                                            $status_class = 'status-resolved';
+                                            break;
+                                        default:
+                                            $status_class = 'status-default';
+                                    }
+                                    ?>
+                                    <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
+                                </p>
+
+
+                            </li>
+                        </a>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p>No reports found.</p>
+                <?php endif; ?>
+            </ul>
+        </section>
     </div>
-</header>
-
-<!-- Report Submission Form -->
-
-<div class="report-form">
-<h2>Reports Near Me</h2>
-    <h1>Govt HomePage</h1>
-</div>
 
 </body>
+
 </html>

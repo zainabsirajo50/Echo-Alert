@@ -1,8 +1,13 @@
 <?php
 // signup.php
 session_start();
+<<<<<<< HEAD
 
 require 'connection.php'; // Ensure this path is correct
+=======
+include "path.php";
+require 'app/database/connection.php'; // Ensure this path is correct
+>>>>>>> b99f1837324aa1c9725f4b6b6e47f3377b2074d5
 
 // Check if the connection is established
 if ($conn->connect_error) {
@@ -18,11 +23,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirmPassword = $_POST['confirm_password'] ?? '';
     $userType = $_POST['user_type'] ?? 'community_member'; // Default to community_member if not selected
 
+<<<<<<< HEAD
 
     // Basic validation
     if ($password === $confirmPassword) {
         // Hash the password for security
         
+=======
+    // Basic validation
+    if ($password === $confirmPassword) {
+        // Hash the password for security
+
+>>>>>>> b99f1837324aa1c9725f4b6b6e47f3377b2074d5
 
         // Prepare and bind
         $insert_user_query = "INSERT INTO users (name, email, password, user_type) VALUES (?, ?, ?, ?)";
@@ -35,7 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->execute()) {
                 // Add JavaScript code to show popup after successful signup
                 echo '<script>alert("User registered successfully!");</script>';
+<<<<<<< HEAD
                 header("Location: /~zsirajo1/src/LoginForm.php");
+=======
+                header('Location: ' . BASE_URL . '/login-form.php');
+>>>>>>> b99f1837324aa1c9725f4b6b6e47f3377b2074d5
                 exit(); // Ensure no further code is executed after redirect
             } else {
                 echo "Error: " . $stmt->error; // Use stmt->error for error message
@@ -55,12 +71,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="LoginForm.css">
+    <link rel="stylesheet" href="src/css/LoginForm.css">
     <title>Sign Up</title>
 </head>
+
 <body>
     <div class="signup-form">
         <h2>Sign Up</h2>
@@ -90,7 +108,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <button type="submit" class="submit-button">Sign Up</button>
         </form>
-        <p class="signup-link">Already have an account? <a href="/~zsirajo1/src/LoginForm.php">Sign In</a></p>
+        <p class="signup-link">Already have an account? <a href='<?php echo BASE_URL; ?>/login-form.php'>Sign In</a></p>
     </div>
 </body>
+
 </html>
