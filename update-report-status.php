@@ -12,18 +12,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("si", $status, $reportid);
         if ($stmt->execute()) {
             $_SESSION['message'] = "Status updated successfully!";
-            $_SESSION['type'] = "success-message";
+            $_SESSION['type'] = "success";
         } else {
             $_SESSION['message'] = "Failed to update status.";
-            $_SESSION['type'] = "error-message";
+            $_SESSION['type'] = "error";
         }
         $stmt->close();
     } else {
         $_SESSION['message'] = "Invalid report ID or status.";
-        $_SESSION['type'] = "error-message";
+        $_SESSION['type'] = "error";
     }
 
-    header("Location: view-report.php?reportid=" . $reportid);
+    header("Location: view-reports.php?reportid=" . $reportid);
     exit();
 }
 ?>
