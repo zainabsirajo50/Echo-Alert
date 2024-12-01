@@ -82,7 +82,7 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
                         <a href="<?php echo BASE_URL; ?>/view-reports.php?reportid=<?php echo $report['reportid']; ?>"
                             class="report-link">
                             <li class="report-item">
-                                <h3>Issue #<?php echo htmlspecialchars($report['issue_name']); ?></h3>
+                                <h3><?php echo htmlspecialchars($report['issue_name']); ?> Issue</h3>
                                 <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
                                 <p><strong>Date:</strong> <?php echo date('F j, Y', strtotime($report['date_reported'])); ?></p>
                                 <p><strong>Upvotes:</strong> <?php echo $report['upvote_count']; ?></p>

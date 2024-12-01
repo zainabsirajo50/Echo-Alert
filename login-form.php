@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Set session variables, redirect, etc.
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['name'];
-            $_SESSION['role'] = $user['user_type'];
+            $_SESSION['user_type'] = $user['user_type'];
             echo "Success!";
 
             if($user['user_type'] === 'community_member'){
