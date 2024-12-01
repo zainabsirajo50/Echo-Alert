@@ -83,42 +83,45 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
                 <em>(<?php echo date('M j, Y', strtotime($response['response_date'])); ?>)</em>
             </p>
             <p><strong>Upvotes:</strong> <?php echo htmlspecialchars($report['upvote_count']); ?></p>
-            <p><strong>Status:</strong> 
-                    <?php 
-                        $status = htmlspecialchars($report['status']);
-                        // Style based on the status value
-                        $status_class = '';
-                        switch ($status) {
-                            case 'Pending':
-                                $status_class = 'status-pending';
-                                break;
-                            case 'In Progress':
-                                $status_class = 'status-in-progress';
-                                break;
-                            case 'Resolved':
-                                $status_class = 'status-resolved';
-                                break;
-                            default:
-                                $status_class = 'status-default';
-                        }
-                    ?>
-                    
-                    <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
+            <p><strong>Status:</strong>
+                <?php
+                $status = htmlspecialchars($report['status']);
+                // Style based on the status value
+                $status_class = '';
+                switch ($status) {
+                    case 'Pending':
+                        $status_class = 'status-pending';
+                        break;
+                    case 'In Progress':
+                        $status_class = 'status-in-progress';
+                        break;
+                    case 'Resolved':
+                        $status_class = 'status-resolved';
+                        break;
+                    default:
+                        $status_class = 'status-default';
+                }
+                ?>
 
- 
-                        <form action="update-report-status.php" method="POST">
-                            <div class="select-status-container">
-                                <select name="status" id="status" class="select-status" required>
-                                    <option value="Pending" <?php echo $report['status'] === 'Pending' ? 'selected' : ''; ?>>Pending</option>
-                                    <option value="In Progress" <?php echo $report['status'] === 'In Progress' ? 'selected' : ''; ?>>In Progress</option>
-                                    <option value="Resolved" <?php echo $report['status'] === 'Resolved' ? 'selected' : ''; ?>>Resolved</option>
-                                </select>
-                            </div>
-                            <input type="hidden" name="reportid" value="<?php echo $reportid; ?>">
-                            <button type="submit" class="submit-button">Update Status</button>
-                        </form>
+                <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
 
-                </p>
+                <?php if ($user_type === 'govt_worker'): ?>
+                <form action="update-report-status.php" method="POST">
+                    <div class="select-status-container">
+                        <select name="status" id="status" class="select-status" required>
+                            <option value="Pending" <?php echo $report['status'] === 'Pending' ? 'selected' : ''; ?>>Pending
+                            </option>
+                            <option value="In Progress" <?php echo $report['status'] === 'In Progress' ? 'selected' : ''; ?>>
+                                In Progress</option>
+                            <option value="Resolved" <?php echo $report['status'] === 'Resolved' ? 'selected' : ''; ?>>
+                                Resolved</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="reportid" value="<?php echo $reportid; ?>">
+                    <button type="submit" class="submit-button">Update Status</button>
+                </form>
+            <?php endif; ?>
+            </p>
         </div>
 
 
