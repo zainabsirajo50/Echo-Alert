@@ -77,12 +77,12 @@ if ($search_query) {
     <!-- Navigation Bar -->
     <nav class="navbar">
         <ul class="navbar-list">
-            <li><a href="user-homepage.php">All</a></li>
-            <li><a href="user-homepage.php?filter=recent">Recents</a></li>
-            <li><a href="user-homepage.php?filter=most_votes">Most Votes</a></li>
+            <li><a href='<?php echo $user_type === 'govt_worker' ? BASE_URL . '/govt-homepage.php' : BASE_URL . '/user-homepage.php'; ?>'>All</a></li>
+            <li><a href='<?php echo $user_type === 'govt_worker' ? BASE_URL . '/govt-homepage.php?filter=recent' : BASE_URL . '/user-homepage.php?filter=recent'; ?>'>Recents</a></li>
+            <li><a href='<?php echo $user_type === 'govt_worker' ? BASE_URL . '/govt-homepage.php?filter=most_votes' : BASE_URL . '/user-homepage.php?filter=most_votes'; ?>'>Most Votes</a></li>
         </ul>
         <div class="navbar-search">
-            <form method="GET" action="user-homepage.php">
+            <form method="GET" window.location.href='<?php echo $user_type === 'govt_worker' ? BASE_URL . '/govt-homepage.php' : BASE_URL . '/user-homepage.php'; ?>'>
                 <input type="text" name="search_query" placeholder="Search by location and issue..."
                     value="<?php echo isset($_GET['search_query']) ? htmlspecialchars($_GET['search_query']) : ''; ?>">
                 <button type="submit">Search</button>
@@ -102,7 +102,7 @@ if ($search_query) {
                         <a href="<?php echo BASE_URL; ?>/view-reports.php?reportid=<?php echo $report['reportid']; ?>"
                             class="report-link">
                             <li class="report-item">
-                                <h3>Issue #<?php echo htmlspecialchars($report['issue_name']); ?></h3>
+                                <h3><?php echo htmlspecialchars($report['issue_name']); ?> Issue</h3>
                                 <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
                                 <p><strong>Date:</strong> <?php echo date('F j, Y', strtotime($report['date_reported'])); ?></p>
                                 <p><strong>Upvotes:</strong> <?php echo $report['upvote_count']; ?></p>
