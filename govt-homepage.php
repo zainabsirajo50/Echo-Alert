@@ -6,26 +6,6 @@ require "app/controllers/reports.php"; // Ensure this path is correct
 
 $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
 
-// Check for search query or filters
-$search_query = isset($_GET['search_query']) ? trim($_GET['search_query']) : null;
-$filter = isset($_GET['filter']) ? trim($_GET['filter']) : 'all';
-
-// Apply filters or search
-if ($search_query) {
-    $reports = searchReportsByQuery($conn, $search_query);
-} else {
-    switch ($filter) {
-        case 'recent':
-            $reports = selectRecentReports($conn); // Fetch recent reports
-            break;
-        case 'most_votes':
-            $reports = selectMostVotedReports($conn); // Fetch most voted reports
-            break;
-        default:
-            $reports = selectALLReports($conn); // Fetch all reports
-            break;
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -77,12 +57,12 @@ if ($search_query) {
     <!-- Navigation Bar -->
     <nav class="navbar">
         <ul class="navbar-list">
-            <li><a href="user-homepage.php">All</a></li>
-            <li><a href="user-homepage.php?filter=recent">Recents</a></li>
-            <li><a href="user-homepage.php?filter=most_votes">Most Votes</a></li>
+            <li><a href="govt-homepage.php">All</a></li>
+            <li><a href="govt-homepage.php?filter=recent">Recents</a></li>
+            <li><a href="govt-homepage.php?filter=most_votes">Most Votes</a></li>
         </ul>
         <div class="navbar-search">
-            <form method="GET" action="user-homepage.php">
+            <form method="GET" action="govt-homepage.php">
                 <input type="text" name="search_query" placeholder="Search by location and issue..."
                     value="<?php echo isset($_GET['search_query']) ? htmlspecialchars($_GET['search_query']) : ''; ?>">
                 <button type="submit">Search</button>

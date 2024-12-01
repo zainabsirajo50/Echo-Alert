@@ -3,28 +3,6 @@
 include "path.php";
 require "app/controllers/reports.php";
 
-// Check for search query or filters
-$search_query = isset($_GET['search_query']) ? trim($_GET['search_query']) : null;
-$filter = isset($_GET['filter']) ? trim($_GET['filter']) : 'all';
-
-// Apply filters or search
-if ($search_query) {
-    $reports = searchReportsByQuery($conn, $search_query);
-} else {
-    switch ($filter) {
-        case 'recent':
-            $reports = selectRecentReports($conn); // Fetch recent reports
-            break;
-        case 'most_votes':
-            $reports = selectMostVotedReports($conn); // Fetch most voted reports
-            break;
-        default:
-            $reports = selectALLReports($conn); // Fetch all reports
-            break;
-    }
-}
-
-
 ?>
 
 <!DOCTYPE html>
