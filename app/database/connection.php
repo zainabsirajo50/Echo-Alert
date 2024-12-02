@@ -69,13 +69,24 @@ $sql_create_issue_types = "CREATE TABLE IF NOT EXISTS issue_types (
     issue_name VARCHAR(255) NOT NULL UNIQUE
 );";
 
+$sql_create_rsvps = "CREATE TABLE IF NOT EXISTS rsvps (
+    rsvp_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    event_id INT NOT NULL,
+    rsvp_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    rsvp_code VARCHAR(10) NOT NULL UNIQUE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (event_id) REFERENCES events(event_id) ON DELETE CASCADE
+);";
+
 // Execute all table creation queries
 if (
     $conn->query($sql_create_users) === TRUE &&
     $conn->query($sql_create_reports) === TRUE &&
     $conn->query($sql_create_events) === TRUE &&
     $conn->query($sql_create_issue_types) === TRUE &&
-    $conn->query($sql_create_responses) === TRUE
+    $conn->query($sql_create_responses) === TRUE &&
+    $conn->query($sql_create_rsvps) === TRUE
 ) {
     echo "";
 } else {

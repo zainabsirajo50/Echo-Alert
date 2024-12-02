@@ -47,7 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // If no errors, proceed to insert the data
     if (count($errors) === 0) {
-        $stmt = $conn->prepare("INSERT INTO reports (userid, issue_type_id, location) VALUES (?, ?, ?)");
+        $sql = "INSERT INTO reports (userid, issue_type_id, location) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
         $stmt->bind_param("iis", $userid, $issue_type_id, $location);
 
         if ($stmt->execute()) {

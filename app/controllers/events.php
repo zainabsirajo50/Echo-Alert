@@ -2,6 +2,9 @@
 session_start();
 require ROOT_PATH . "/app/database/connection.php"; // Ensure this path is correct
 
+$errors = [];
+$user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
+
 // Check if the connection is established
 if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
@@ -89,3 +92,72 @@ if ($searchQuery) {
 } else {
     $events = getAllEvents($conn);
 }
+
+
+// Form submission for rsvps
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rsvp'])) {
+    $event_id = $_POST['event_id'];
+    $user_id = $_SESSION['user_id']; // Assume the user is logged in and their ID is stored in the session
+
+    // Generate a unique RSVP code
+    $rsvp_code = substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 10);
+
+    // Insert the RSVP into the database
+    if (count($errors) === 0) {
+        $sql = "INSERT INTO rsvps (user_id, event_id, rsvp_code) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("iis", $user_id, $event_id, $rsvp_code);
+
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "RSVP successful! Your RSVP code is: $rsvp_code";
+            $_SESSION['type'] = "success-message";
+            header("Location: " . BASE_URL . "/my-rsvps.php");
+            exit;
+        } else {
+            $_SESSION['message'] = "Failed to RSVP. Please try again.";
+            $_SESSION['type'] = "error-message";
+        }
+
+        $stmt->close();
+
+    }
+}
+
+
+// Fetch the RSVPs for the logged-in user
+function getAllRsvpsEvents($conn)
+{
+    $user_id = $_SESSION['user_id'];
+    $sql = "
+        SELECT 
+            r.event_id,
+            r.rsvp_date,
+            r.rsvp_code, 
+            e.event_name,
+            e.event_date,
+            e.event_location 
+        FROM 
+            rsvps r
+        JOIN 
+            events e ON r.event_id = e.event_id
+        WHERE 
+            r.user_id = ?
+        ORDER BY 
+            r.rsvp_date DESC";
+
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rsvps = [];
+    while ($row = $result->fetch_assoc()) {
+        $rsvps[] = $row;
+    }
+    return $rsvps;
+}
+
+$rsvps = getAllRsvpsEvents($conn);
+
+
+
