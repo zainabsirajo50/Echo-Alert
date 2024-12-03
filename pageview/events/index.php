@@ -133,7 +133,7 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
             <li><a href="index.php?filter=recent">Recents</a></li>
         </ul>
         <div class="navbar-search">
-            <form method="GET" action="index.php">
+            <form method="GET" action="my-rsvps.php">
                 <input type="text" name="search_query" placeholder="Search by location and event..."
                     value="<?php echo isset($_GET['search_query']) ? htmlspecialchars($_GET['search_query']) : ''; ?>">
                 <button type="submit">Search</button>
@@ -154,7 +154,11 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
                         <p class="event-location"><?php echo htmlspecialchars($event['event_location']); ?></p>
                         <p class="event-description"><?php echo htmlspecialchars($event['event_description']); ?></p>
                         <!-- Example button for further interaction -->
-                        <button>RSVP</button>
+                        <form action="index.php" method="POST">
+                            <input type="hidden" name="event_id" value="<?php echo $event['event_id']; ?>">
+                            <button type="submit" name="rsvp">RSVP</button>
+                        </form>
+
                     </div>
                 <?php endforeach; ?>
             </div>

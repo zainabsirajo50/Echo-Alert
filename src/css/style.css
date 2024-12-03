@@ -150,6 +150,26 @@ li {
     background-color: #256c82;
 }
 
+/* ************* MESSAGES ************* */
+
+.message {
+    width: 100%;
+    list-style: none;
+    padding: 3px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.error-message {
+    border: 1px solid rgb(129, 35, 35);
+    background: rgb(247, 181, 181);
+}
+
+.success-message {
+    border: 1px solid rgb(18, 100, 46);
+    background: rgb(186, 247, 206);
+}
+
 .events-container {
     margin-top: 100px;
     /* To prevent content from being hidden under the fixed header */
