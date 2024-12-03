@@ -48,6 +48,7 @@ require "app/controllers/reports.php";
         
         <!-- Notifications Dropdown -->
         <div id="notifications-dropdown" class="notifications-dropdown">
+        <button class="clear-notifications-button" onclick="clearAllNotifications()">Clear All Notifications</button>
             <ul id="notifications-list">
                 <!-- Notifications will be populated here dynamically -->
                 <li>No notifications found.</li>
@@ -107,6 +108,27 @@ require "app/controllers/reports.php";
             }
         };
         xhr.send('notification_id=' + notificationId);
+    }
+
+    function clearAllNotifications() {
+        if (!confirm("Are you sure you want to clear all notifications?")) {
+            return; // Exit if the user cancels
+        }
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'clear-all-notifications.php', true); // Create a new PHP endpoint
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // Clear the notifications list in the UI
+                document.getElementById('notifications-list').innerHTML = "<li>No notifications found.</li>";
+
+                // Optionally, remove the new-notification animation from the bell
+                const bellButton = document.querySelector('.notification-button');
+                bellButton.classList.remove('new-notification');
+            }
+        };
+        xhr.send(); // No additional data needed for clearing all notifications
     }
     </script>
             <!-- Profile Dropdown -->

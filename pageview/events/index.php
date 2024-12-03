@@ -81,7 +81,7 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
         xhr.send();
     }
 
-    // Fetch notifications every 5 seconds (5000 milliseconds)
+    // Fetch notifications every 1 seconds (1000 milliseconds)
     setInterval(fetchNotifications, 1000);
 
     // Toggle dropdown visibility
@@ -125,7 +125,7 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
     <br>
     <br>
     <br>
-    
+
     <!-- Navbar for filters and search -->
     <nav class="navbar">
         <ul class="navbar-list">

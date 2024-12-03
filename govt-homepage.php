@@ -42,22 +42,21 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
             </div>
         <!-- Notification Bell Button -->
         <div class="notification-container">
-            <button class="notification-button" onclick="toggleDropdown()">
-                🔔
-
-            </button>
-            
-            <!-- Notifications Dropdown -->
-            <div id="notifications-dropdown" class="notifications-dropdown">
-                <ul id="notifications-list">
-                    <!-- Notifications will be populated here dynamically -->
-                    <li>No notifications found.</li>
-                </ul>
-            </div>
+        <button class="notification-button" onclick="toggleDropdown()">
+            🔔
+        </button>
+        
+        <!-- Notifications Dropdown -->
+        <div id="notifications-dropdown" class="notifications-dropdown">
+        <button class="clear-notifications-button" onclick="clearAllNotifications()">Clear All Notifications</button>
+            <ul id="notifications-list">
+                <!-- Notifications will be populated here dynamically -->
+                <li>No notifications found.</li>
+            </ul>
         </div>
+    </div>
 
-        <script>
-            
+    <script>
         // Function to fetch notifications from the server
         function fetchNotifications() {
             var xhr = new XMLHttpRequest();
@@ -88,10 +87,16 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
             xhr.send();
         }
 
-
-        // Fetch notifications every 1 seconds
+        // Fetch notifications every 5 seconds (5000 milliseconds)
         setInterval(fetchNotifications, 1000);
-        // Function to mark a notification as read
+
+        // Toggle dropdown visibility
+        function toggleDropdown() {
+            const dropdown = document.getElementById("notifications-dropdown");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        }
+
+        // Mark notification as read when clicked
         function markAsRead(notificationId) {
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'mark_as_read.php', true); // Send POST request to mark_as_read.php
@@ -105,15 +110,26 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
             xhr.send('notification_id=' + notificationId);
         }
 
-        // Fetch notifications every 1 seconds (1000 milliseconds)
-        setInterval(fetchNotifications, 1000);
+        function clearAllNotifications() {
+            if (!confirm("Are you sure you want to clear all notifications?")) {
+                return; // Exit if the user cancels
+            }
 
-        // Toggle dropdown visibility
-        function toggleDropdown() {
-            const dropdown = document.getElementById("notifications-dropdown");
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'clear-all-notifications.php', true); // Create a new PHP endpoint
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Clear the notifications list in the UI
+                    document.getElementById('notifications-list').innerHTML = "<li>No notifications found.</li>";
+
+                    // Optionally, remove the new-notification animation from the bell
+                    const bellButton = document.querySelector('.notification-button');
+                    bellButton.classList.remove('new-notification');
+                }
+            };
+            xhr.send(); // No additional data needed for clearing all notifications
         }
-
         </script>
             <!-- Profile Dropdown -->
             <div class="profile-dropdown">
