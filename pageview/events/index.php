@@ -120,7 +120,12 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
             </div>
         </div>
     </header>
-
+    
+    <br>
+    <br>
+    <br>
+    <br>
+    
     <!-- Navbar for filters and search -->
     <nav class="navbar">
         <ul class="navbar-list">

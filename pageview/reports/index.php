@@ -127,6 +127,16 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
         </div>
     </header>
 
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+
     <!-- Report Submission Form -->
     <div class="report-form">
         <h2>Submit a Report</h2>

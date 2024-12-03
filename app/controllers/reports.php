@@ -1,9 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-echo '<br>';
 
 session_start();
 require ROOT_PATH . "/app/database/connection.php";

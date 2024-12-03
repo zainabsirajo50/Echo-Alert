@@ -143,6 +143,11 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
         </div>
     </header>
 
+    <br>
+    <br>
+    <br>
+    <br>
+    
     <div class="response-card">
         <div class="report-info">
             <h1>Report Details</h1>
