@@ -23,10 +23,9 @@ if (!$user) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $pasword = $_POST('password');
-    $update_query = "UPDATE users SET name = ?, email = ?, password = ?, WHERE id = ?";
+    $update_query = "UPDATE users SET name = ?, email = ? WHERE id = ?";
     $stmt = $conn->prepare($update_query);
-    $stmt->bind_param("ssi", $name, $email, $password, $user_id);
+    $stmt->bind_param("ssi", $name, $email, $user_id);
 
     if ($stmt->execute()) {
         echo "<script>alert('Settings updated successfully!');</script>";

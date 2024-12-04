@@ -97,7 +97,7 @@ function getNotifications($user_id, $conn) {
     }
 }
 
-// functions.php (or wherever your function is)
+
 function getAllNotifications($conn) {
     // Create the query to fetch all notifications
     $query = "SELECT * FROM notifications";
