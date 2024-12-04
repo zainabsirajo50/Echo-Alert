@@ -8,7 +8,7 @@ $conn = new mysqli($servername, $username, $password, $database);
 if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
 } else {
-    echo "<br>";
+    echo "";
 }
 
 // Ensure the 'user_type' column exists in the users table
@@ -63,6 +63,16 @@ $sql_create_responses = "CREATE TABLE IF NOT EXISTS responses (
     FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE
 );";
 
+$sql_create_notifications = "CREATE TABLE IF NOT EXISTS notifications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    message TEXT NOT NULL,
+    type ENUM('info', 'alert', 'success', 'error') DEFAULT 'info',
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);";
+
 // Create the 'issue_types' table if it does not exist
 $sql_create_issue_types = "CREATE TABLE IF NOT EXISTS issue_types (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -106,7 +116,7 @@ foreach ($default_issue_types as $type) {
     $stmt = $conn->prepare("INSERT IGNORE INTO issue_types (issue_name) VALUES (?)");
     $stmt->bind_param("s", $type);
     if ($stmt->execute()) {
-        echo "<br>";
+        echo "";
     } else {
         echo "Error adding issue type '$type': " . $conn->error . "<br>";
     }

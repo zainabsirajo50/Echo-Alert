@@ -91,7 +91,7 @@ li {
     position: relative;
     z-index: 1;
     background-color: transparent;
-    margin-top: 0px;
+    margin-top: 100px;
 }
 
 .navbar-list {
@@ -171,7 +171,7 @@ li {
 }
 
 .events-container {
-    margin-top: 100px;
+    margin-top: 40px;
     /* To prevent content from being hidden under the fixed header */
     width: 80%;
     text-align: center;

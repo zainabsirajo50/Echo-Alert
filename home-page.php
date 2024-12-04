@@ -10,20 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eco Alert</title>
     <link rel="stylesheet" href="src/css/HomePage.css">
-<<<<<<< Updated upstream
-=======
     <script src="HomePage.js"></script>
->>>>>>> Stashed changes
 </head>
 
 <body>
     <header>
-<<<<<<< Updated upstream
-        <h1>Eco-Alert</h1>
-        <a href="<?php echo BASE_URL; ?>/login-form.php">Log In</a>
-        <a href="<?php echo BASE_URL; ?>/signup-form.php">Sign Up</a>
-    </header>
-=======
         <div id="title">
             <h1>Eco-Alert</h1>
         </div>
@@ -68,7 +59,6 @@
     <div id="footer">
         <p style="color: #FFFFFF; text-align: right; font-size: 1.3em">Zainab Sirajo, Hafsa Hassan, Karlissa Brown - Database Systems (Fall 2024)</p>
     </div>
->>>>>>> Stashed changes
 </body>
 
 </html>

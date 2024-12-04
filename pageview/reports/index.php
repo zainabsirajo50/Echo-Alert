@@ -1,6 +1,7 @@
 <?php
 include("../../path.php");
-include(ROOT_PATH . "/app/controllers/reports.php");
+require(ROOT_PATH . "/app/controllers/reports.php");
+
 
 $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
 ?>
@@ -13,6 +14,7 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Report</title>
     <link rel="stylesheet" href="../../src/css/LoginForm.css">
+    <link rel="stylesheet" href="src/css/style.css">
 </head>
 
 <body>

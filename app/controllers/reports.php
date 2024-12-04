@@ -1,9 +1,5 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-echo '<br>';
 
 session_start();
 require ROOT_PATH . "/app/database/connection.php";
@@ -12,7 +8,7 @@ require ROOT_PATH . "/app/database/connection.php";
 $errors = [];
 $location = '';
 $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
-
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 // Check if the form was submitted via POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
@@ -30,13 +26,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Please select a valid issue type.";
     } else {
         // Ensure the issue_type_id exists in the database
-        $stmt = $conn->prepare("SELECT id FROM issue_types WHERE id = ?");
+        $stmt = $conn->prepare("SELECT id, issue_name FROM issue_types WHERE id = ?");
         $stmt->bind_param("i", $issue_type_id);
         $stmt->execute();
         $stmt->store_result();
 
         if ($stmt->num_rows === 0) {
             $errors[] = "Selected issue type does not exist.";
+        } else {
+            // Fetch the issue name from the database
+            $stmt->bind_result($id, $issue_name);
+            $stmt->fetch();
         }
         $stmt->close();
     }
@@ -52,6 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("iis", $userid, $issue_type_id, $location);
 
         if ($stmt->execute()) {
+             // Create a notification for the user
+        $message = "A report about '$issue_name' has been submitted. in '$location'";
+        createNotification($userid, $message, $conn);
+
+       
             $_SESSION['message'] = "Report submitted successfully!";
             $_SESSION['type'] = "success-message";
             header("Location: " . BASE_URL . "/pageview/reports/index.php");
@@ -64,6 +69,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
     }
 }
+
+// Function to create a new notification
+function createNotification($userid, $message, $conn) {
+    $stmt = $conn->prepare("INSERT INTO notifications (user_id, message) VALUES (?, ?)");
+    $stmt->bind_param("is", $userid, $message);
+    if ($stmt->execute()) {
+        echo "Notification created successfully.<br>";
+    } else {
+        echo "Error creating notification: " . $stmt->error . "<br>";
+    }
+    $stmt->close();
+}
+
+// Function to fetch notifications
+function getNotifications($user_id, $conn) {
+    $query = "SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $user_id); // Ensure user_id is properly passed
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        return $result->fetch_all(MYSQLI_ASSOC); // Fetch notifications as associative array
+    } else {
+        return []; // Return an empty array if no notifications are found
+    }
+}
+
+
+function getAllNotifications($conn) {
+    // Create the query to fetch all notifications
+    $query = "SELECT * FROM notifications";
+    
+    // Execute the query
+    $result = $conn->query($query);
+    
+    // Check if the query was successful
+    if ($result) {
+        // Fetch all notifications as an associative array
+        return $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        // Handle any errors that may occur
+        return [];
+    }
+}
+
+// Fetch the notifications for the logged-in user
+$notifications = getAllNotifications($conn);
 
 
 
@@ -246,5 +299,3 @@ if ($search_query) {
             break;
     }
 }
-
-

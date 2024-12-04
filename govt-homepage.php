@@ -5,7 +5,7 @@ include "path.php";
 require "app/controllers/reports.php"; // Ensure this path is correct
 
 $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
-
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 ?>
 
 <!DOCTYPE html>
@@ -16,6 +16,11 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Report</title>
     <link rel="stylesheet" href="src/css/LoginForm.css">
+    <link rel="stylesheet" href="src/css/style.css">
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body>
@@ -41,52 +46,52 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
 
     <!-- Report Submission Form -->
 
-    <div class="report-form">
+    <div class="events-container">
         <h2>Reports Near Me</h2>
-        <section class="reports-section">
-            <ul>
+        <section class="events-cards">
                 <?php if (!empty($reports)): ?>
                     <?php foreach ($reports as $report): ?>
-                        <!-- Wrap the entire report card inside an <a> tag -->
-                        <a href="<?php echo BASE_URL; ?>/view-reports.php?reportid=<?php echo $report['reportid']; ?>"
-                            class="report-link">
-                            <li class="report-item">
-                                <h3><?php echo htmlspecialchars($report['issue_name']); ?> Issue</h3>
-                                <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
-                                <p><strong>Date:</strong> <?php echo date('F j, Y', strtotime($report['date_reported'])); ?></p>
-                                <p><strong>Upvotes:</strong> <?php echo $report['upvote_count']; ?></p>
+                        <div class="event-card">
+                            <!-- Wrap the entire report card inside an <a> tag -->
+                            <a href="<?php echo BASE_URL; ?>/view-reports.php?reportid=<?php echo $report['reportid']; ?>"
+                                class="report-link">
+                                
+                                    <h3 class="event-name"><?php echo htmlspecialchars($report['issue_name']); ?> Issue</h3>
+                                    <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
+                                    <p><strong>Date:</strong> <?php echo date('F j, Y', strtotime($report['date_reported'])); ?></p>
+                                    <p><strong>Upvotes:</strong> <?php echo $report['upvote_count']; ?></p>
 
-                                <!-- Display the status with corresponding color -->
-                                <p><strong>Status:</strong>
-                                    <?php
-                                    $status = htmlspecialchars($report['status']);
-                                    // Style based on the status value
-                                    $status_class = '';
-                                    switch ($status) {
-                                        case 'Pending':
-                                            $status_class = 'status-pending';
-                                            break;
-                                        case 'In Progress':
-                                            $status_class = 'status-in-progress';
-                                            break;
-                                        case 'Resolved':
-                                            $status_class = 'status-resolved';
-                                            break;
-                                        default:
-                                            $status_class = 'status-default';
-                                    }
-                                    ?>
-                                    <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
-                                </p>
+                                    <!-- Display the status with corresponding color -->
+                                    <p><strong>Status:</strong>
+                                        <?php
+                                        $status = htmlspecialchars($report['status']);
+                                        // Style based on the status value
+                                        $status_class = '';
+                                        switch ($status) {
+                                            case 'Pending':
+                                                $status_class = 'status-pending';
+                                                break;
+                                            case 'In Progress':
+                                                $status_class = 'status-in-progress';
+                                                break;
+                                            case 'Resolved':
+                                                $status_class = 'status-resolved';
+                                                break;
+                                            default:
+                                                $status_class = 'status-default';
+                                        }
+                                        ?>
+                                        <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
+                                    </p>
 
 
-                            </li>
-                        </a>
+                        
+                            </a>
+                        </div>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <p>No reports found.</p>
                 <?php endif; ?>
-            </ul>
         </section>
     </div>
 

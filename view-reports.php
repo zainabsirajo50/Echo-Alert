@@ -50,7 +50,7 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
             <p><strong>Issue Type:</strong> <?php echo htmlspecialchars($report['issue_type']); ?></p>
             <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
             <p><strong>Date Reported:</strong>
-                <em>(<?php echo date('M j, Y', strtotime($response['response_date'])); ?>)</em>
+                <em>(<?php echo date('F j, Y', strtotime($report['date_reported'])); ?>)</em></p>
             </p>
             <p><strong>Upvotes:</strong> <?php echo htmlspecialchars($report['upvote_count']); ?></p>
             <p><strong>Status:</strong>
