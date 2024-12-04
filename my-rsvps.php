@@ -13,6 +13,7 @@ include ROOT_PATH . "/app/controllers/events.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My RSVPs</title>
     <link rel="stylesheet" href="src/css/LoginForm.css">
+
 </head>
 
 <body>
@@ -21,6 +22,7 @@ include ROOT_PATH . "/app/controllers/events.php";
     <?php include(ROOT_PATH . "/app/messages/header.php"); ?>
 
     <div>
+        
 
         <?php if (!empty($rsvps)): ?>
             <table>

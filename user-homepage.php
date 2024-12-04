@@ -12,7 +12,8 @@ require "app/controllers/reports.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Reports</title>
     <link rel="stylesheet" href="src/css/LoginForm.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="src/css/style.css">
+
 
     
 
@@ -22,7 +23,7 @@ require "app/controllers/reports.php";
 
     <!-- Header Section with Buttons and Profile Dropdown -->
     <?php include(ROOT_PATH . "/app/messages/header.php"); ?>
-
+    
     <!-- Navigation Bar -->
     <nav class="navbar">
         <ul class="navbar-list">
@@ -40,16 +41,16 @@ require "app/controllers/reports.php";
     </nav>
 
     <!-- Report Section -->
-    <div class="report-form">
+    <div class="events-container">
         <h2>Reports</h2>
 
         <!-- Display Reports -->
-        <section class="reports-section">
-            <ul>
+        <section class="events-cards">
+        
                 <?php if (!empty($reports)): ?>
                     <?php foreach ($reports as $report): ?>
-                        <li class="report-item">
-                            <h3><?php echo htmlspecialchars($report['issue_name']); ?> Issue</h3>
+                        <div class="event-card">
+                            <h3 class="event-name"><?php echo htmlspecialchars($report['issue_name']); ?> Issue</h3>
                             <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
                             <p><strong>Date:</strong> <?php echo date('F j, Y', strtotime($report['date_reported'])); ?></p>
                             <p><strong>Upvotes:</strong> <?php echo $report['upvote_count']; ?></p>
@@ -89,12 +90,12 @@ require "app/controllers/reports.php";
                                     ⬇
                                 </button>
                             </form>
-                        </li>
+                        </div>
                     <?php endforeach; ?>
                 <?php else: ?>
                     <p>No reports found.</p>
                 <?php endif; ?>
-            </ul>
+    
         </section>
     </div>
 
