@@ -20,39 +20,8 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
 
 <body>
 
-    <!-- Header Section with Buttons and Search Bar -->
-    <header>
-
-        <div class="header-container">
-            <div class="header-buttons">
-                <!-- Dynamically set the link based on user type -->
-                <button
-                    onclick="window.location.href='<?php echo $user_type === 'govt_worker' ? BASE_URL . '/govt-homepage.php' : BASE_URL . '/user-homepage.php'; ?>'">
-                    Home
-                </button>
-            </div>
-            <div class="header-buttons">
-                <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View
-                    Events</button>
-
-            </div>
-
-            <!-- Profile Dropdown -->
-            <div class="profile-dropdown">
-                <button class="profile-button">
-                    <div>
-                        Hi, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!
-                    </div>
-                </button>
-                <div class="dropdown-menu">
-                    <a href="<?php echo BASE_URL; ?>/view_profile.php">View Profile</a>
-                    <a href="<?php echo BASE_URL; ?>/settings.php">Settings</a>
-                    <a href="<?php echo BASE_URL; ?>/logout.php">Logout</a>
-                </div>
-            </div>
-        </div>
-        </div>
-    </header>
+    <!-- Header Section with Buttons and Profile Dropdown -->
+    <?php include(ROOT_PATH . "/app/messages/header.php"); ?>
 
     <!-- Navigation Bar -->
     <nav class="navbar">
