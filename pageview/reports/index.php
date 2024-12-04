@@ -17,45 +17,8 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
 
 <body>
 
-    <!-- Header Section with Buttons and Search Bar -->
-    <header>
-        <div class="header-container">
-            <div class="header-buttons">
-                <button onclick="window.location.href='<?php echo $user_type === 'govt_worker' ? BASE_URL . '/govt-homepage.php' : BASE_URL . '/user-homepage.php'; ?>'">
-                    Home
-                </button>
-                    <?php if ($user_type !== 'govt_worker'): ?>
-                        <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/reports/index.php'">Create
-                        Report</button>
-
-                    <?php endif; ?>
-                    <button onclick="window.location.href='<?php echo BASE_URL; ?>/pageview/events/index.php'">View
-                        Events</button>
-                </div>
-
-                <div class="header-search">
-                    <form method="GET" action="search_results.php">
-                        <input type="text" name="search_query" placeholder="Search reports or events..." required>
-                        <button type="submit">Search</button>
-                    </form>
-                </div>
-
-      
-            <!-- Profile Dropdown -->
-            <div class="profile-dropdown">
-                <button class="profile-button">
-                <div>
-                 Hi, <?php echo htmlspecialchars($_SESSION['user_name']); ?>!
-                </div>
-                </button>
-                <div class="dropdown-menu">
-                    <a href="<?php echo BASE_URL; ?>/view_profile.php">View Profile</a>
-                    <a href="<?php echo BASE_URL; ?>/settings.php">Settings</a>
-                    <a href="<?php echo BASE_URL; ?>/logout.php">Logout</a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <!-- Header Section with Buttons and Profile Dropdown -->
+    <?php include(ROOT_PATH . "/app/messages/header.php"); ?>
 
     <!-- Report Submission Form -->
     <div class="report-form">
