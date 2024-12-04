@@ -96,7 +96,8 @@ if (
     $conn->query($sql_create_events) === TRUE &&
     $conn->query($sql_create_issue_types) === TRUE &&
     $conn->query($sql_create_responses) === TRUE &&
-    $conn->query($sql_create_rsvps) === TRUE
+    $conn->query($sql_create_rsvps) === TRUE &&
+    $conn->query($sql_create_notifications) === TRUE
 ) {
     echo "";
 } else {
