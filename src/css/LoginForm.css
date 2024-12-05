@@ -535,14 +535,18 @@ tr:hover {
 }
 
 #notifications-dropdown {
-    display: none; /* Make sure it's hidden by default */
+    display: none;
+    /* Make sure it's hidden by default */
     position: absolute;
-    width: 300px; /* Adjust this value to make it wider */
-    background-color: #348AA7; /* Set background color */
+    width: 300px;
+    /* Adjust this value to make it wider */
+    background-color: #348AA7;
+    /* Set background color */
     border: 1px solid #ddd;
     padding: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 5px; /* Optional: adds rounded corners */
+    border-radius: 5px;
+    /* Optional: adds rounded corners */
 }
 
 .notification-container {
@@ -553,49 +557,74 @@ tr:hover {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 24px;  /* Increase the icon size */
+    font-size: 24px;
+    /* Increase the icon size */
     color: #333;
-    padding: 10px;    /* Add padding for a larger clickable area */
-    border-radius: 50%; /* Make the button round */
-    width: 50px;      /* Fixed width */
-    height: 50px;     /* Fixed height */
+    padding: 10px;
+    /* Add padding for a larger clickable area */
+    border-radius: 50%;
+    /* Make the button round */
+    width: 50px;
+    /* Fixed width */
+    height: 50px;
+    /* Fixed height */
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for a raised effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Optional shadow for a raised effect */
 }
 
 .notification-button.new-notification {
-    animation: glow 0.5s infinite; /* Add effect for attention */
+    animation: glow 0.5s infinite;
+    /* Add effect for attention */
     border: 2px solid #ffffff;
 }
 
 @keyframes shake {
-    0% { transform: translateX(0); }
-    25% { transform: translateX(-4px); }
-    50% { transform: translateX(4px); }
-    75% { transform: translateX(-4px); }
-    100% { transform: translateX(0); }
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-4px);
+    }
+
+    50% {
+        transform: translateX(4px);
+    }
+
+    75% {
+        transform: translateX(-4px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
 }
 
 @keyframes glow {
     0% {
         box-shadow: 0 0 5px #ffffff;
     }
+
     50% {
         box-shadow: 0 0 20px #348AA7, 0 0 30px #ffffff;
     }
+
     100% {
         box-shadow: 0 0 5px #ffffff;
     }
 }
 
 .notification-button:hover {
-    background-color: #175164;  /* Light background on hover */
+    background-color: #175164;
+    /* Light background on hover */
 }
 
 .notification-button:focus {
-    outline: none;  /* Remove focus outline for a cleaner look */
+    outline: none;
+    /* Remove focus outline for a cleaner look */
 }
 
 /* Styling for the dropdown items */
@@ -607,15 +636,18 @@ tr:hover {
 
 
 .notifications-dropdown li:hover {
-    background-color: #175164; /* Set background color */
+    background-color: #175164;
+    /* Set background color */
 }
 
 .unread {
     font-weight: bold;
     padding: 8px;
     cursor: pointer;
-    font-size: 12px; /* Smaller text size */
-    color: white; /* White text color */
+    font-size: 12px;
+    /* Smaller text size */
+    color: white;
+    /* White text color */
 
 }
 
@@ -623,13 +655,16 @@ tr:hover {
     font-weight: normal;
     padding: 8px;
     cursor: pointer;
-    font-size: 12px; /* Smaller text size */
-    color: white; /* White text color */
+    font-size: 12px;
+    /* Smaller text size */
+    color: white;
+    /* White text color */
 }
 
 .clear-notifications-button {
     display: block;
-    margin: 10px auto; /* Center the button */
+    margin: 10px auto;
+    /* Center the button */
     padding: 8px 16px;
     background-color: #FF6B6B;
     color: white;
