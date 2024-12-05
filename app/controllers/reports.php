@@ -52,11 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("iis", $userid, $issue_type_id, $location);
 
         if ($stmt->execute()) {
-             // Create a notification for the user
-        $message = "A report about '$issue_name' has been submitted. in '$location'";
-        createNotification($userid, $message, $conn);
+            // Create a notification for the user
+            $message = "A report about '$issue_name' has been submitted. in '$location'";
+            createNotification($userid, $message, $conn);
 
-       
+
             $_SESSION['message'] = "Report submitted successfully!";
             $_SESSION['type'] = "success-message";
             header("Location: " . BASE_URL . "/pageview/reports/index.php");
@@ -71,7 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Function to create a new notification
-function createNotification($userid, $message, $conn) {
+function createNotification($userid, $message, $conn)
+{
     $stmt = $conn->prepare("INSERT INTO notifications (user_id, message) VALUES (?, ?)");
     $stmt->bind_param("is", $userid, $message);
     if ($stmt->execute()) {
@@ -83,7 +84,8 @@ function createNotification($userid, $message, $conn) {
 }
 
 // Function to fetch notifications
-function getNotifications($user_id, $conn) {
+function getNotifications($user_id, $conn)
+{
     $query = "SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $user_id); // Ensure user_id is properly passed
@@ -98,13 +100,14 @@ function getNotifications($user_id, $conn) {
 }
 
 
-function getAllNotifications($conn) {
+function getAllNotifications($conn)
+{
     // Create the query to fetch all notifications
     $query = "SELECT * FROM notifications";
-    
+
     // Execute the query
     $result = $conn->query($query);
-    
+
     // Check if the query was successful
     if ($result) {
         // Fetch all notifications as an associative array
