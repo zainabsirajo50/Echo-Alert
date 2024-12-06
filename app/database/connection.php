@@ -1,5 +1,5 @@
 <?php
-include "../../config.php";
+include "/config.php";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
@@ -165,7 +165,7 @@ $sql_reset_upvote_count = "
 ";
 
 if ($conn->query($sql_reset_upvote_count) === TRUE) {
-    echo "Upvote count reset successfully.<br>";
+    echo "";
 } else {
     echo "Error resetting upvote count: " . $conn->error . "<br>";
 }

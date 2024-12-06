@@ -26,6 +26,7 @@ $stmt->close();
 <?php
 // Assuming user type is stored in the session as 'user_type'
 $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
+
 ?>
 
 <!DOCTYPE html>
