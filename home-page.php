@@ -39,17 +39,17 @@
         <h2 id="web-info">Feature Highlights</h2>
         <div class="feature-container">
             <div class="point">
-                <img src="image-assets/env-icon.jpg" alt="Need to change - PLACEHOLDER">
+                <img style='border: none; box-shadow: none;'src="image-assets/report.png" alt="report">
                 <h3>Report Management</h3>
                 <p>This platform enables users within communities to report environmental concerns such as pollution, illegal dumping, and contaminated water. Governmental organizations will have the capability to review these reports and address them accordingly. Additionally, the platform will maintain a record of past environmental issues.</p>
             </div>
             <div class="point">
-                <img src="image-assets/env-icon.jpg" alt="Need to change - PLACEHOLDER">
+                <img style='border: none; box-shadow: none;' src="image-assets/bell.png" alt="bell">
                 <h3>Adaptive Updates</h3>
                 <p>Our site allows government organizations to provide timely updates to communities, enhancing transparency between groups. Communities will be able to track progress on various reports through status updates and descriptions provided by the government.</p>
             </div>
             <div class="point">
-                <img src="image-assets/env-icon.jpg" alt="Need to change - PLACEHOLDER">
+                <img style='border: none; box-shadow: none; margin-top: 25px;' src="image-assets/people.png" alt="people">
                 <h3>Event Coordination</h3>
                 <p>Our platform promotes community awareness initiatives and events, such as clean-up meetings and various community activities. This fosters greater community involvement in maintaining environmental health in their areas.</p>
             </div>

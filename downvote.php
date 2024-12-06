@@ -9,7 +9,7 @@ if (isset($_POST['report_id']) && is_numeric($_POST['report_id'])) {
     $reportid = mysqli_real_escape_string($conn, $reportid);
 
     // Increment the upvote count
-    $query = "UPDATE reports SET upvote_count = upvote_count + 1 WHERE reportid = $reportid"; 
+    $query = "UPDATE reports SET upvote_count = upvote_count - 1 WHERE reportid = $reportid"; 
 
     if (mysqli_query($conn, $query)) {
         // Success, redirect back

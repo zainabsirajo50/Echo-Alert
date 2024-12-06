@@ -63,18 +63,6 @@ $sql_create_responses = "CREATE TABLE IF NOT EXISTS responses (
     FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE
 );";
 
-$sql_create_votes = "CREATE TABLE IF NOT EXISTS votes (
-    vote_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    report_id INT NOT NULL,
-    vote_type ENUM('upvote') NOT NULL,
-    vote_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (report_id) REFERENCES reports(reportid) ON DELETE CASCADE,
-    UNIQUE (user_id, report_id)
-);";
-
-
 $sql_create_notifications = "CREATE TABLE IF NOT EXISTS notifications (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -109,8 +97,7 @@ if (
     $conn->query($sql_create_issue_types) === TRUE &&
     $conn->query($sql_create_responses) === TRUE &&
     $conn->query($sql_create_rsvps) === TRUE &&
-    $conn->query($sql_create_notifications) === TRUE &&
-    $conn->query($sql_create_votes) === TRUE
+    $conn->query($sql_create_notifications) === TRUE
 ) {
     echo "";
 } else {
@@ -152,7 +139,6 @@ if ($result->num_rows > 0) {
         echo "Error updating 'reports' table: " . $conn->error . "<br>";
     }
 }
-
 
 // Fetch users from the database
 $sql_fetch_users = "SELECT DISTINCT id, name FROM users";
