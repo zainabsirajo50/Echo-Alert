@@ -1,5 +1,5 @@
 <?php
-include ROOT_PATH . "/config.php";
+include "../../config.php";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
@@ -152,6 +152,24 @@ if ($result->num_rows > 0) {
         echo "Error updating 'reports' table: " . $conn->error . "<br>";
     }
 }
+
+// Reset upvote_count in the reports table
+$sql_reset_upvote_count = "
+    UPDATE reports r
+    LEFT JOIN (
+        SELECT report_id, COUNT(*) AS vote_count
+        FROM votes
+        GROUP BY report_id
+    ) v ON r.reportid = v.report_id
+    SET r.upvote_count = IFNULL(v.vote_count, 0);
+";
+
+if ($conn->query($sql_reset_upvote_count) === TRUE) {
+    echo "Upvote count reset successfully.<br>";
+} else {
+    echo "Error resetting upvote count: " . $conn->error . "<br>";
+}
+
 
 
 // Fetch users from the database
