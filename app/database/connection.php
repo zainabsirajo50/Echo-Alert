@@ -1,5 +1,5 @@
 <?php
-include "../../config.php";
+include "config.php";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
@@ -29,7 +29,8 @@ $sql_create_users = "CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    user_type VARCHAR(100) NOT NULL
 );";
 
 // Create the 'reports' table if it does not exist
@@ -40,6 +41,7 @@ $sql_create_reports = "CREATE TABLE IF NOT EXISTS reports (
     location VARCHAR(255) NOT NULL,
     date_reported DATETIME DEFAULT CURRENT_TIMESTAMP,
     upvote_count INT DEFAULT 0,
+    status ENUM('Pending', 'In Progress', 'Resolved') NOT NULL DEFAULT 'Pending',
     FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (issue_type_id) REFERENCES issue_types(id) ON DELETE RESTRICT
 );";
