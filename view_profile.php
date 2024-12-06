@@ -51,7 +51,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eco Alert</title>
     <link rel="stylesheet" href="src/css/view_profile.css">
-    <!-- <link rel="stylesheet" href="src/css/LoginForm.css"> -->
     <link rel="stylesheet" href="src/css/LoginForm.css">
     <link rel="stylesheet" href="src/css/style.css">
     <script src="src/js/modal.js"></script>
