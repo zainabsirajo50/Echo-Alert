@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eco Alert</title>
     <link rel="stylesheet" href="src/css/HomePage.css">
-    <script src="HomePage.js"></script>
+    <script src="src/js/HomePage.js"></script>
 </head>
 
 <body>
@@ -50,7 +50,7 @@
             </div>
             <div class="point">
                 <img style='border: none; box-shadow: none; margin-top: 25px;' src="image-assets/people.png" alt="people">
-                <h3>Event Coordination</h3>
+                <h3 style='margin-top: 45px;'>Event Coordination</h3>
                 <p>Our platform promotes community awareness initiatives and events, such as clean-up meetings and various community activities. This fosters greater community involvement in maintaining environmental health in their areas.</p>
             </div>
         </div>
