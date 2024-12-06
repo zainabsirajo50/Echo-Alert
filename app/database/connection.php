@@ -167,7 +167,7 @@ $sql_reset_upvote_count = "
 ";
 
 if ($conn->query($sql_reset_upvote_count) === TRUE) {
-    echo "Upvote count reset successfully.<br>";
+    echo "";
 } else {
     echo "Error resetting upvote count: " . $conn->error . "<br>";
 }

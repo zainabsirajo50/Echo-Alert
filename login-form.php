@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Fetch the user data
         $user = $result->fetch_assoc();
         // Verify the password
-        if ($password == $user['password']) {
+        if (password_verify($password, $user['password'])) {
             // Login successful
             echo "Login successful!";
             // Set session variables, redirect, etc.
