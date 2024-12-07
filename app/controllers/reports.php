@@ -52,11 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("iis", $userid, $issue_type_id, $location);
 
         if ($stmt->execute()) {
-             // Create a notification for the user
-        $message = "A report about '$issue_name' has been submitted. in '$location'";
-        createNotification($userid, $message, $conn);
+            // Create a notification for the user
+            $message = "A report about '$issue_name' has been submitted. in '$location'";
+            createNotification($userid, $message, $conn);
 
-       
+
             $_SESSION['message'] = "Report submitted successfully!";
             $_SESSION['type'] = "success-message";
             header("Location: " . BASE_URL . "/pageview/reports/index.php");
@@ -71,7 +71,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Function to create a new notification
-function createNotification($userid, $message, $conn) {
+function createNotification($userid, $message, $conn)
+{
     $stmt = $conn->prepare("INSERT INTO notifications (user_id, message) VALUES (?, ?)");
     $stmt->bind_param("is", $userid, $message);
     if ($stmt->execute()) {
@@ -83,7 +84,8 @@ function createNotification($userid, $message, $conn) {
 }
 
 // Function to fetch notifications
-function getNotifications($user_id, $conn) {
+function getNotifications($user_id, $conn)
+{
     $query = "SELECT * FROM notifications WHERE user_id = ? ORDER BY created_at DESC";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $user_id); // Ensure user_id is properly passed
@@ -98,13 +100,14 @@ function getNotifications($user_id, $conn) {
 }
 
 
-function getAllNotifications($conn) {
+function getAllNotifications($conn)
+{
     // Create the query to fetch all notifications
     $query = "SELECT * FROM notifications";
-    
+
     // Execute the query
     $result = $conn->query($query);
-    
+
     // Check if the query was successful
     if ($result) {
         // Fetch all notifications as an associative array
@@ -170,6 +173,56 @@ function selectALLTypes($conn)
 }
 
 $issue_types = selectALLTypes($conn);
+
+// Function to count filtered or searched reports
+function countFilteredReports($conn, $search_query = null, $filter = 'all')
+{
+    $base_sql = "SELECT COUNT(*) AS total_reports FROM reports r 
+                 JOIN issue_types it ON r.issue_type_id = it.id";
+    $where_clauses = [];
+    $params = [];
+    $param_types = '';
+
+    // Handle search query
+    if ($search_query) {
+        $where_clauses[] = "(it.issue_name LIKE ? OR r.location LIKE ?)";
+        $like_query = "%" . $search_query . "%";
+        $params[] = $like_query;
+        $params[] = $like_query;
+        $param_types .= "ss";
+    }
+
+    // Handle filters
+    if ($filter === 'recent') {
+        // No additional where clause for recent; just modify the logic to use order in `selectRecentReports()`
+    } elseif ($filter === 'most_votes') {
+        // No additional where clause for most votes
+    }
+    // Append where clauses to the SQL query
+    if (count($where_clauses) > 0) {
+        $base_sql .= " WHERE " . implode(" AND ", $where_clauses);
+    }
+
+    $stmt = $conn->prepare($base_sql);
+
+    // Dynamically bind parameters
+    if (!empty($params)) {
+        $stmt->bind_param($param_types, ...$params);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($row = $result->fetch_assoc()) {
+        return $row['total_reports'];
+    }
+
+    return 0; // Default to 0 if no matching reports
+}
+
+// Dynamically fetch the count based on search or filter
+$total_reports = countFilteredReports($conn, $search_query, $filter);
+
 
 // Fetch reports based on search query for issue name or location
 function searchReportsByQuery($conn, $search_query)

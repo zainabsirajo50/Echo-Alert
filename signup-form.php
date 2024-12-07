@@ -21,14 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Basic validation
     if ($password === $confirmPassword) {
         // Hash the password for security
-
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
         // Prepare and bind
         $insert_user_query = "INSERT INTO users (name, email, password, user_type) VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($insert_user_query);
 
         if ($stmt) {
-            $stmt->bind_param("ssss", $name, $email, $password, $userType);
+            $stmt->bind_param("ssss", $name, $email, $hashedPassword, $userType);
 
             // Execute the statement
             if ($stmt->execute()) {

@@ -14,16 +14,18 @@ require "app/controllers/reports.php";
     <link rel="stylesheet" href="src/css/LoginForm.css">
     <link rel="stylesheet" href="src/css/style.css">
 
-
-    
-
 </head>
 
 <body>
 
     <!-- Header Section with Buttons and Profile Dropdown -->
     <?php include(ROOT_PATH . "/app/messages/header.php"); ?>
-    
+
+    <!-- Display Total Reports -->
+    <div class="report-summary">
+        <h1>Total Reports: <?php echo $total_reports; ?></h1>
+    </div>
+
     <!-- Navigation Bar -->
     <nav class="navbar">
         <ul class="navbar-list">
@@ -40,62 +42,69 @@ require "app/controllers/reports.php";
         </div>
     </nav>
 
+    <!-- Display Total Reports -->
+    <div class="report-summary">
+        <?php if ($search_query): ?>
+            <h2>Total Reports Found for "<?php echo htmlspecialchars($search_query); ?>": <?php echo $total_reports; ?>
+            </h2>
+        <?php elseif ($filter === 'recent'): ?>
+            <h2>Total Recent Reports: <?php echo $total_reports; ?></h2>
+        <?php elseif ($filter === 'most_votes'): ?>
+            <h2>Total Most Voted Reports: <?php echo $total_reports; ?></h2>
+        <?php else: ?>
+            <h2>Total Reports: <?php echo $total_reports; ?></h2>
+        <?php endif; ?>
+    </div>
+
     <!-- Report Section -->
     <div class="events-container">
         <h2>Reports</h2>
 
         <!-- Display Reports -->
         <section class="events-cards">
-        
-                <?php if (!empty($reports)): ?>
-                    <?php foreach ($reports as $report): ?>
-                        <div class="event-card">
-                            <h3 class="event-name"><?php echo htmlspecialchars($report['issue_name']); ?> Issue</h3>
-                            <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
-                            <p><strong>Date:</strong> <?php echo date('F j, Y', strtotime($report['date_reported'])); ?></p>
-                            <p><strong>Upvotes:</strong> <?php echo $report['upvote_count']; ?></p>
-                            <!-- Display the status with corresponding color -->
-                            <p><strong>Status:</strong>
-                                <?php
-                                $status = htmlspecialchars($report['status']);
-                                // Style based on the status value
-                                $status_class = '';
-                                switch ($status) {
-                                    case 'Pending':
-                                        $status_class = 'status-pending';
-                                        break;
-                                    case 'In Progress':
-                                        $status_class = 'status-in-progress';
-                                        break;
-                                    case 'Resolved':
-                                        $status_class = 'status-resolved';
-                                        break;
-                                    default:
-                                        $status_class = 'status-default';
-                                }
-                                ?>
-                                <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
-                            </p>
-                            <!-- Upvote Form -->
-                            <form method="POST" action="upvote.php">
-                                <input type="hidden" name="report_id" value="<?php echo $report['reportid']; ?>">
-                                <button type="submit" class="upvote-button">
-                                    ⬆
-                                </button>
-                            </form>
-                            <!-- Downvote Form -->
-                            <form method="POST" action="downvote.php">
-                                <input type="hidden" name="report_id" value="<?php echo $report['reportid']; ?>">
-                                <button type="submit" class="upvote-button">
-                                    ⬇
-                                </button>
-                            </form>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>No reports found.</p>
-                <?php endif; ?>
-    
+
+            <?php if (!empty($reports)): ?>
+                <?php foreach ($reports as $report): ?>
+                    <div class="event-card">
+                        <h3 class="event-name"><?php echo htmlspecialchars($report['issue_name']); ?> Issue</h3>
+                        <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
+                        <p><strong>Date:</strong> <?php echo date('F j, Y', strtotime($report['date_reported'])); ?></p>
+                        <p><strong>Upvotes:</strong> <?php echo $report['upvote_count']; ?></p>
+                        <!-- Display the status with corresponding color -->
+                        <p><strong>Status:</strong>
+                            <?php
+                            $status = htmlspecialchars($report['status']);
+                            // Style based on the status value
+                            $status_class = '';
+                            switch ($status) {
+                                case 'Pending':
+                                    $status_class = 'status-pending';
+                                    break;
+                                case 'In Progress':
+                                    $status_class = 'status-in-progress';
+                                    break;
+                                case 'Resolved':
+                                    $status_class = 'status-resolved';
+                                    break;
+                                default:
+                                    $status_class = 'status-default';
+                            }
+                            ?>
+                            <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
+                        </p>
+
+                        <!-- Upvote Form -->
+                        <form method="POST" action="upvote.php">
+                            <input type="hidden" name="report_id" value="<?php echo $report['reportid']; ?>">
+                            <button type="submit" class="upvote-button">⬆ Upvote</button>
+                        </form>
+
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>No reports found.</p>
+            <?php endif; ?>
+
         </section>
     </div>
 

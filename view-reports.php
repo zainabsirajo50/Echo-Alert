@@ -5,15 +5,22 @@ require ROOT_PATH . "/app/database/connection.php";
 
 $reportid = isset($_GET['reportid']) ? intval($_GET['reportid']) : 0;
 
-// Fetch the report
-$stmt = $conn->prepare("SELECT * FROM reports WHERE reportid = ?");
+// Fetch the report and include the issue_name
+$stmt = $conn->prepare("
+    SELECT r.*, it.issue_name 
+    FROM reports r
+    JOIN issue_types it ON r.issue_type_id = it.id
+    WHERE r.reportid = ?
+");
 $stmt->bind_param("i", $reportid);
 $stmt->execute();
 $report = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
+
 // Fetch all responses for this report
-$stmt = $conn->prepare("SELECT r.response_text, DATE(r.response_date) AS response_date, u.name 
+$stmt = $conn->prepare("
+                        SELECT r.response_text, DATE(r.response_date) AS response_date, u.name 
                         FROM responses r 
                         JOIN users u ON r.userid = u.id 
                         WHERE r.reportid = ? ORDER BY r.response_date DESC");
@@ -26,6 +33,7 @@ $stmt->close();
 <?php
 // Assuming user type is stored in the session as 'user_type'
 $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community_member'; // Default to 'community_member' if not set
+
 ?>
 
 <!DOCTYPE html>
@@ -47,10 +55,11 @@ $user_type = isset($_SESSION['user_type']) ? $_SESSION['user_type'] : 'community
     <div class="response-card">
         <div class="report-info">
             <h1>Report Details</h1>
-            <p><strong>Issue Type:</strong> <?php echo htmlspecialchars($report['issue_type']); ?></p>
+            <p><strong>Issue Type:</strong> <?php echo htmlspecialchars($report['issue_name']); ?></p>
             <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
             <p><strong>Date Reported:</strong>
-                <em>(<?php echo date('F j, Y', strtotime($report['date_reported'])); ?>)</em></p>
+                <em>(<?php echo date('F j, Y', strtotime($report['date_reported'])); ?>)</em>
+            </p>
             </p>
             <p><strong>Upvotes:</strong> <?php echo htmlspecialchars($report['upvote_count']); ?></p>
             <p><strong>Status:</strong>
