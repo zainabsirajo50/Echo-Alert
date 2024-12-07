@@ -15,7 +15,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $current_password = $_POST['current_password'];
+    $current_password = $_POST['current_password'] ?? '';
     $new_password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password'];
 
@@ -33,15 +33,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Validate current password
-    if ($user['password'] !== $current_password) {
+    if (!password_verify($current_password, $user['password'])) {
         echo "<script>alert('Current password is incorrect.');</script>";
     } elseif ($new_password !== $confirm_password) {
         echo "<script>alert('New password and confirm password do not match.');</script>";
     } else {
+        // Hash the new password
+        $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);
+
         // Update the password in the database
         $update_query = "UPDATE users SET password = ? WHERE id = ?";
         $stmt = $conn->prepare($update_query);
-        $stmt->bind_param("si", $new_password, $user_id);
+        $stmt->bind_param("si", $hashedPassword, $user_id);
 
         if ($stmt->execute()) {
             echo "<script>alert('Password changed successfully!');</script>";
