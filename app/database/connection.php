@@ -7,8 +7,6 @@ $conn = new mysqli($servername, $username, $password, $database);
 // Check connection
 if ($conn->connect_error) {
     die("Database connection failed: " . $conn->connect_error);
-} else {
-    echo "";
 }
 
 // Ensure the 'user_type' column exists in the users table
@@ -17,10 +15,9 @@ if ($result->num_rows == 0) {
     $conn->query("ALTER TABLE users ADD COLUMN user_type VARCHAR(100) NOT NULL");
 }
 
-// Ensure the 'user_type' column exists in the users table
+// Ensure the 'status' column exists in the reports table
 $result = $conn->query("SHOW COLUMNS FROM reports LIKE 'status'");
 if ($result->num_rows == 0) {
-    // Add column if it doesn't exist
     $conn->query("ALTER TABLE reports ADD COLUMN status ENUM('Pending', 'In Progress', 'Resolved') NOT NULL DEFAULT 'Pending'");
 }
 
@@ -76,7 +73,6 @@ $sql_create_votes = "CREATE TABLE IF NOT EXISTS votes (
     UNIQUE (user_id, report_id)
 );";
 
-
 $sql_create_notifications = "CREATE TABLE IF NOT EXISTS notifications (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -104,20 +100,14 @@ $sql_create_rsvps = "CREATE TABLE IF NOT EXISTS rsvps (
 );";
 
 // Execute all table creation queries
-if (
-    $conn->query($sql_create_users) === TRUE &&
-    $conn->query($sql_create_reports) === TRUE &&
-    $conn->query($sql_create_events) === TRUE &&
-    $conn->query($sql_create_issue_types) === TRUE &&
-    $conn->query($sql_create_responses) === TRUE &&
-    $conn->query($sql_create_rsvps) === TRUE &&
-    $conn->query($sql_create_notifications) === TRUE &&
-    $conn->query($sql_create_votes) === TRUE
-) {
-    echo "";
-} else {
-    echo "Error creating table: " . $conn->error . "<br>";
-}
+$conn->query($sql_create_users);
+$conn->query($sql_create_reports);
+$conn->query($sql_create_events);
+$conn->query($sql_create_issue_types);
+$conn->query($sql_create_responses);
+$conn->query($sql_create_rsvps);
+$conn->query($sql_create_notifications);
+$conn->query($sql_create_votes);
 
 // Insert default issue types if they don't already exist
 $default_issue_types = [
@@ -131,11 +121,7 @@ $default_issue_types = [
 foreach ($default_issue_types as $type) {
     $stmt = $conn->prepare("INSERT IGNORE INTO issue_types (issue_name) VALUES (?)");
     $stmt->bind_param("s", $type);
-    if ($stmt->execute()) {
-        echo "";
-    } else {
-        echo "Error adding issue type '$type': " . $conn->error . "<br>";
-    }
+    $stmt->execute();
     $stmt->close();
 }
 
@@ -148,11 +134,7 @@ if ($result->num_rows > 0) {
         ADD COLUMN issue_type_id INT NOT NULL, 
         ADD CONSTRAINT fk_issue_type FOREIGN KEY (issue_type_id) REFERENCES issue_types(id) ON DELETE RESTRICT;
     ";
-    if ($conn->query($sql_alter_reports) === TRUE) {
-        echo "'reports' table updated to use 'issue_type_id'.<br>";
-    } else {
-        echo "Error updating 'reports' table: " . $conn->error . "<br>";
-    }
+    $conn->query($sql_alter_reports);
 }
 
 // Reset upvote_count in the reports table
@@ -165,15 +147,9 @@ $sql_reset_upvote_count = "
     ) v ON r.reportid = v.report_id
     SET r.upvote_count = IFNULL(v.vote_count, 0);
 ";
-
-if ($conn->query($sql_reset_upvote_count) === TRUE) {
-    echo "";
-} else {
-    echo "Error resetting upvote count: " . $conn->error . "<br>";
-}
-
-
+$conn->query($sql_reset_upvote_count);
 
 // Fetch users from the database
 $sql_fetch_users = "SELECT DISTINCT id, name FROM users";
 $result_users = $conn->query($sql_fetch_users);
+?>
