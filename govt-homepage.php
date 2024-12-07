@@ -48,16 +48,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
     <!-- Display Total Reports -->
     <div class="report-summary">
-        <?php if ($search_query): ?>
-            <h2>Total Reports Found for "<?php echo htmlspecialchars($search_query); ?>": <?php echo $total_reports; ?>
-            </h2>
-        <?php elseif ($filter === 'recent'): ?>
-            <h2>Total Recent Reports: <?php echo $total_reports; ?></h2>
-        <?php elseif ($filter === 'most_votes'): ?>
-            <h2>Total Most Voted Reports: <?php echo $total_reports; ?></h2>
-        <?php else: ?>
-            <h2>Total Reports: <?php echo $total_reports; ?></h2>
-        <?php endif; ?>
+        <h2>Total Reports: <?php echo $total_reports; ?></h2>
     </div>
 
     <!-- Report Submission Form -->
