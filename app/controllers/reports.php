@@ -174,6 +174,56 @@ function selectALLTypes($conn)
 
 $issue_types = selectALLTypes($conn);
 
+// Function to count filtered or searched reports
+function countFilteredReports($conn, $search_query = null, $filter = 'all')
+{
+    $base_sql = "SELECT COUNT(*) AS total_reports FROM reports r 
+                 JOIN issue_types it ON r.issue_type_id = it.id";
+    $where_clauses = [];
+    $params = [];
+    $param_types = '';
+
+    // Handle search query
+    if ($search_query) {
+        $where_clauses[] = "(it.issue_name LIKE ? OR r.location LIKE ?)";
+        $like_query = "%" . $search_query . "%";
+        $params[] = $like_query;
+        $params[] = $like_query;
+        $param_types .= "ss";
+    }
+
+    // Handle filters
+    if ($filter === 'recent') {
+        // No additional where clause for recent; just modify the logic to use order in `selectRecentReports()`
+    } elseif ($filter === 'most_votes') {
+        // No additional where clause for most votes
+    }
+    // Append where clauses to the SQL query
+    if (count($where_clauses) > 0) {
+        $base_sql .= " WHERE " . implode(" AND ", $where_clauses);
+    }
+
+    $stmt = $conn->prepare($base_sql);
+
+    // Dynamically bind parameters
+    if (!empty($params)) {
+        $stmt->bind_param($param_types, ...$params);
+    }
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($row = $result->fetch_assoc()) {
+        return $row['total_reports'];
+    }
+
+    return 0; // Default to 0 if no matching reports
+}
+
+// Dynamically fetch the count based on search or filter
+$total_reports = countFilteredReports($conn, $search_query, $filter);
+
+
 // Fetch reports based on search query for issue name or location
 function searchReportsByQuery($conn, $search_query)
 {

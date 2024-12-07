@@ -20,7 +20,12 @@ require "app/controllers/reports.php";
 
     <!-- Header Section with Buttons and Profile Dropdown -->
     <?php include(ROOT_PATH . "/app/messages/header.php"); ?>
-    
+
+    <!-- Display Total Reports -->
+    <div class="report-summary">
+        <h1>Total Reports: <?php echo $total_reports; ?></h1>
+    </div>
+
     <!-- Navigation Bar -->
     <nav class="navbar">
         <ul class="navbar-list">
@@ -36,6 +41,20 @@ require "app/controllers/reports.php";
             </form>
         </div>
     </nav>
+
+    <!-- Display Total Reports -->
+    <div class="report-summary">
+        <?php if ($search_query): ?>
+            <h2>Total Reports Found for "<?php echo htmlspecialchars($search_query); ?>": <?php echo $total_reports; ?>
+            </h2>
+        <?php elseif ($filter === 'recent'): ?>
+            <h2>Total Recent Reports: <?php echo $total_reports; ?></h2>
+        <?php elseif ($filter === 'most_votes'): ?>
+            <h2>Total Most Voted Reports: <?php echo $total_reports; ?></h2>
+        <?php else: ?>
+            <h2>Total Reports: <?php echo $total_reports; ?></h2>
+        <?php endif; ?>
+    </div>
 
     <!-- Report Section -->
     <div class="events-container">

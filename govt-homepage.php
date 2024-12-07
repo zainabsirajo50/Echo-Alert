@@ -28,6 +28,8 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     <!-- Header Section with Buttons and Profile Dropdown -->
     <?php include(ROOT_PATH . "/app/messages/header.php"); ?>
 
+
+
     <!-- Navigation Bar -->
     <nav class="navbar">
         <ul class="navbar-list">
@@ -44,54 +46,68 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
         </div>
     </nav>
 
+    <!-- Display Total Reports -->
+    <div class="report-summary">
+        <?php if ($search_query): ?>
+            <h2>Total Reports Found for "<?php echo htmlspecialchars($search_query); ?>": <?php echo $total_reports; ?>
+            </h2>
+        <?php elseif ($filter === 'recent'): ?>
+            <h2>Total Recent Reports: <?php echo $total_reports; ?></h2>
+        <?php elseif ($filter === 'most_votes'): ?>
+            <h2>Total Most Voted Reports: <?php echo $total_reports; ?></h2>
+        <?php else: ?>
+            <h2>Total Reports: <?php echo $total_reports; ?></h2>
+        <?php endif; ?>
+    </div>
+
     <!-- Report Submission Form -->
 
     <div class="events-container">
         <h2>Reports Near Me</h2>
         <section class="events-cards">
-                <?php if (!empty($reports)): ?>
-                    <?php foreach ($reports as $report): ?>
-                        <div class="event-card">
-                            <!-- Wrap the entire report card inside an <a> tag -->
-                            <a href="<?php echo BASE_URL; ?>/view-reports.php?reportid=<?php echo $report['reportid']; ?>"
-                                class="report-link">
-                                
-                                    <h3 class="event-name"><?php echo htmlspecialchars($report['issue_name']); ?> Issue</h3>
-                                    <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
-                                    <p><strong>Date:</strong> <?php echo date('F j, Y', strtotime($report['date_reported'])); ?></p>
-                                    <p><strong>Upvotes:</strong> <?php echo $report['upvote_count']; ?></p>
+            <?php if (!empty($reports)): ?>
+                <?php foreach ($reports as $report): ?>
+                    <div class="event-card">
+                        <!-- Wrap the entire report card inside an <a> tag -->
+                        <a href="<?php echo BASE_URL; ?>/view-reports.php?reportid=<?php echo $report['reportid']; ?>"
+                            class="report-link">
 
-                                    <!-- Display the status with corresponding color -->
-                                    <p><strong>Status:</strong>
-                                        <?php
-                                        $status = htmlspecialchars($report['status']);
-                                        // Style based on the status value
-                                        $status_class = '';
-                                        switch ($status) {
-                                            case 'Pending':
-                                                $status_class = 'status-pending';
-                                                break;
-                                            case 'In Progress':
-                                                $status_class = 'status-in-progress';
-                                                break;
-                                            case 'Resolved':
-                                                $status_class = 'status-resolved';
-                                                break;
-                                            default:
-                                                $status_class = 'status-default';
-                                        }
-                                        ?>
-                                        <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
-                                    </p>
+                            <h3 class="event-name"><?php echo htmlspecialchars($report['issue_name']); ?> Issue</h3>
+                            <p><strong>Location:</strong> <?php echo htmlspecialchars($report['location']); ?></p>
+                            <p><strong>Date:</strong> <?php echo date('F j, Y', strtotime($report['date_reported'])); ?></p>
+                            <p><strong>Upvotes:</strong> <?php echo $report['upvote_count']; ?></p>
+
+                            <!-- Display the status with corresponding color -->
+                            <p><strong>Status:</strong>
+                                <?php
+                                $status = htmlspecialchars($report['status']);
+                                // Style based on the status value
+                                $status_class = '';
+                                switch ($status) {
+                                    case 'Pending':
+                                        $status_class = 'status-pending';
+                                        break;
+                                    case 'In Progress':
+                                        $status_class = 'status-in-progress';
+                                        break;
+                                    case 'Resolved':
+                                        $status_class = 'status-resolved';
+                                        break;
+                                    default:
+                                        $status_class = 'status-default';
+                                }
+                                ?>
+                                <span class="<?php echo $status_class; ?>"><?php echo $status; ?></span>
+                            </p>
 
 
-                        
-                            </a>
-                        </div>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <p>No reports found.</p>
-                <?php endif; ?>
+
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>No reports found.</p>
+            <?php endif; ?>
         </section>
     </div>
 
